@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import IndexView from '../views/IndexView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: IndexView
   },
   {
     path: '/about',
@@ -14,6 +14,22 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/DashboardView.vue')
+  },
+  {
+    path: '/communities',
+    name: 'communities',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/CommunitiesView.vue')
   },
   {
     path: '/admin',
@@ -29,7 +45,39 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/UsersManager.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminUsersManager.vue')
+  },
+  {
+    path: '/admin/posts',
+    name: 'adminPosts',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminPostsManager.vue')
+  },
+  {
+    path: '/admin/comments',
+    name: 'adminComments',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminCommentsManager.vue')
+  },
+  {
+    path: '/admin/communities',
+    name: 'adminCommunities',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminCommunitiesManager.vue')
+  },
+  {
+    path: '/admin/categories',
+    name: 'adminCategories',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminCategoriesManager.vue')
   }
 ]
 

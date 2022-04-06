@@ -1,11 +1,31 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/admin">Admin</router-link>
+    <!-- <router-link to="/about">About</router-link> | -->
+    <router-link to="/admin">Admin</router-link> |
+    <router-link to="/dashboard">Dashboard</router-link> |
+    <router-link to="/communities">Communities</router-link>
+
+   I'm the NavBar
+    <SearchBar/>
+    <CategoriesFilter/>
+
   </nav>
   <router-view/>
 </template>
+
+<script>
+
+import SearchBar from '@/components/SharedComponents/SearchBar.vue'
+import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
+
+export default {
+  components: {
+    SearchBar,
+    CategoriesFilter
+  }
+}
+</script>
 
 <style>
 #app {

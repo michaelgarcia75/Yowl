@@ -1,12 +1,5 @@
 <template>
-  <nav>
-    <router-link to="/admin">DashBoard</router-link> |
-    <router-link to="/admin/Users">Users</router-link> |
-    <router-link to="/admin/Posts">Posts</router-link> |
-    <router-link to="/admin/Comments">Comments</router-link> |
-    <router-link to="/admin/Communities">Communities</router-link> |
-    <router-link to="/admin/Categories">Categories</router-link>
-  </nav>
+  <AdminNavButtons></AdminNavButtons>
   <div class="admin">
     <AdminData/>
   </div>
@@ -15,12 +8,14 @@
 
 <script>
 // @ is an alias to /src
-import AdminData from '@/components/AdminData.vue'
+import AdminData from '@/components/AdminComponents/AdminData.vue'
+import AdminNavButtons from '@/components/AdminComponents/AdminNavButtons.vue'
 
 export default {
   name: 'AdminView',
   components: {
-    AdminData
+    AdminData,
+    AdminNavButtons
   }
 }
 </script>
