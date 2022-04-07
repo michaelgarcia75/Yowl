@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
     <CreatePostButton/>
     <PostManager/>
     <TopCommunities/>
