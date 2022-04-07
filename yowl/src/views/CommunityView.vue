@@ -16,5 +16,6 @@ export default {
   components: {
     CreatePostButton,
     PostManager
+  }
 }
 </script>
