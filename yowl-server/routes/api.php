@@ -3,6 +3,10 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('users', UserController::class);
+
+Route::apiResource('categories', CategoryController::class);
+
+Route::apiResource('communities', CommunityController::class);
+
+Route::apiResource('posts', PostController::class);
+
+Route::apiResource('comments', CommentController::class);

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return Post::all();
     }
 
     /**
@@ -25,44 +25,44 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        if (User::create($request->all())) {
-            return response()->json(['success' => 'User created'], 200);
+        if (Post::create($request->all())) {
+            return response()->json(['success' => 'Post created'], 200);
         };
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Post $post)
     {
-        return $user;
+        return $post;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Post $post)
     {
-        if ($user->update($request->all())) {
-            return response()->json(['success' => 'User updated'], 200);
+        if ($post->update($request->all())) {
+            return response()->json(['success' => 'Post updated'], 200);
         };
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Post $post)
     {
-        $user->delete();
+        $post->delete();
     }
 }
