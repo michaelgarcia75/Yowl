@@ -1,3 +1,3 @@
 <template>
-    SearchBar !
+    create community
 </template>
