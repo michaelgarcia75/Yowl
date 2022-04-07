@@ -1,3 +1,3 @@
 <template>
-    I'm the category Filter !
+    categoryFilter !
 </template>
