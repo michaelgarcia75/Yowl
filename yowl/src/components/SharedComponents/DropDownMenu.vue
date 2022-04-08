@@ -12,7 +12,7 @@
     </div>
 
     <section class="dropdownMenu" v-if="isOpen === true">
-      <div class="menuArrow" />
+      <div class="menuArrow"/>
       <slot/>
     </section>
 

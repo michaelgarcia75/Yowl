@@ -4,6 +4,8 @@
     <CreatePostButton/>
     <PostManager/>
     <TopCommunities/>
+        <router-link to="/communities">Communities</router-link>
+
   </div>
 </template>
 

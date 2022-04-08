@@ -3,8 +3,8 @@
     <router-link to="/">
       <img alt="Vue logo" src="./assets/logo.png">
     </router-link>
-    <SearchBar/>
-    <CategoriesFilter/>
+    <SearchBar @getPostBySearch="getPostBySearch" :SearchResult="SearchResult"/>
+    <CategoriesFilter :categories="categories"/>
     <router-link to="/admin">Admin</router-link> |
     <DropDownMenu menu-title="Menu">
       <section class="option">
@@ -14,13 +14,13 @@
         <router-link to="/dashboard">Profil</router-link>
       </section>
       <section class="option">
-          <CreateCommunityModal>CreateCommuintyModal</CreateCommunityModal>
+          <CreateCommunityModal>CreateCommunityModal</CreateCommunityModal>
+      </section>
       <section class="option">
         <button>Log Out</button>
       </section>
       <section class="option">
         <span class="desc">Dark mode // OPTION</span>
-      </section>
       </section>
     </DropDownMenu>
   </nav>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 import SearchBar from '@/components/SharedComponents/SearchBar.vue'
 import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
 import DropDownMenu from '@/components/SharedComponents/DropDownMenu.vue'
@@ -36,14 +36,56 @@ import CreateCommunityModal from '@/components/SharedComponents/CreateCommunityM
 
 export default {
   data () {
+    return {
+      SearchResult: [],
+      posts: [],
+      categories: [],
+      communities: []
+    }
   },
   components: {
     SearchBar,
     CategoriesFilter,
     DropDownMenu,
     CreateCommunityModal
+  },
+  methods: {
+    getPostBySearch (/* SearchContent */) {
+      axios.get('https://yowlteam.herokuapp.com/api/posts' /* + SearchContent */)
+        .then((response) => {
+          this.SearchResult = [...response.data]
+        })
+    },
+    getPostByCategoryFilter (categoryId) {
+
+    }
+  },
+  created () {
+    this.getPostBySearch()
+    // },
+    // mouted () {
+    console.log('HELLO WORLD')
+    axios.get('https://yowlteam.herokuapp.com/api/posts')
+      .then((response) => {
+        console.log('posts is', response.data)
+        this.posts = response.data
+      })
+      .catch(error => console.log(error))
+    axios.get('https://yowlteam.herokuapp.com/api/categories')
+      .then((response) => {
+        console.log('categories is', response.data)
+        this.categories = response.data
+      })
+      .catch(error => console.log(error))
+    axios.get('https://yowlteam.herokuapp.com/api/communities')
+      .then((response) => {
+        console.log('communities is', response.data)
+        this.communities = response.data
+      })
+      .catch(error => console.log(error))
   }
 }
+
 </script>
 
 <style>
