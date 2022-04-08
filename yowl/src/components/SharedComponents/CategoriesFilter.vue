@@ -19,8 +19,8 @@ export default {
   props: ['categories'],
   data () {
     return {
-      SearchResult: [],
-      categoryId: this.category.id
+      SearchResult: []
+    //   categoryId: category.id
     }
   }
 }
