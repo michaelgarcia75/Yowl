@@ -1,12 +1,12 @@
 <template>
     <!-- <input v-model.lazy="searchContent" @keyup.enter="$emit(getPostBySearch)" placeholder="Search ..."> -->
     <button @click="$emit('getPostBySearch')">Click here</button>
-    <!-- <p v-for="research in SearchResult" :key="research.id">ma recherche est : {{ research }}</p> -->
+    <!-- <p v-for="research in searchResult" :key="research.id">ma recherche est : {{ research }}</p> -->
 </template>
 
 <script>
 export default {
-  props: ['SearchResult'],
+  props: ['searchResult'],
   data () {
     return {
       searchContent: '',

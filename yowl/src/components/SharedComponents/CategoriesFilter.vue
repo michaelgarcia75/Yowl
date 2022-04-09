@@ -3,7 +3,7 @@
     <DropDownMenu menu-title="Filter by category">
         <div v-for="category in categories" :key="category.id">
           <section class="option">
-          <button @click="$emit('getPostByCategoryFilter', categoryId)" >{{category.name}}</button>
+          <button @click="$emit('getPostByCategoryFilter', category.id)" >{{category.name}}</button>
           </section>
         </div>
     </DropDownMenu>
@@ -19,8 +19,8 @@ export default {
   props: ['categories'],
   data () {
     return {
-      SearchResult: []
-    //   categoryId: category.id
+      searchResult: []
+
     }
   }
 }

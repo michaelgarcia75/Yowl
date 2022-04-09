@@ -4,7 +4,7 @@
       <img alt="Vue logo" src="./assets/logo.png">
     </router-link>
     <SearchBar @getPostBySearch="getPostBySearch" :SearchResult="SearchResult"/>
-    <CategoriesFilter :categories="categories"/>
+    <CategoriesFilter :categories="categories" :filterResult="filterResult"/>
     <router-link to="/admin">Admin</router-link> |
     <DropDownMenu menu-title="Menu">
       <section class="option">
@@ -37,7 +37,9 @@ import CreateCommunityModal from '@/components/SharedComponents/CreateCommunityM
 export default {
   data () {
     return {
-      SearchResult: [],
+      searchResult: [],
+      filterResult: [],
+      searchAndFilterResult: [],
       posts: [],
       categories: [],
       communities: []
@@ -50,14 +52,17 @@ export default {
     CreateCommunityModal
   },
   methods: {
-    getPostBySearch (/* SearchContent */) {
-      axios.get('https://yowlteam.herokuapp.com/api/posts' /* + SearchContent */)
+    getPostBySearch (/* searchContent */) {
+      axios.get('https://yowlteam.hero  kuapp.com/api/posts' /* + searchContent */)
         .then((response) => {
-          this.SearchResult = [...response.data]
+          this.searchResult = [...response.data]
         })
     },
     getPostByCategoryFilter (categoryId) {
-
+      axios.get('https://yowlteam.herokuapp.com/api/posts' /* + categoryId */)
+        .then((response) => {
+          this.filterResult = [...response.data]
+        })
     }
   },
   created () {
