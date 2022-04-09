@@ -1,6 +1,11 @@
 <template>
   I'm the createPost button !
-  <button type="button" class="btn" @click="showModal">Open Modal !</button>
+  <div class="divModal" @click="showModal">
+    <input class="divModalBar" :readonly="readonly" placeholder="New post ..."/>
+    <img class="image" width="30" min-width="10"
+                src="../../assets/img.png"
+                />
+  </div>
 
   <ModalTemplate v-show="isModalVisible" @close="closeModal">
     <template v-slot:header>Create new post</template>
@@ -94,6 +99,20 @@ export default {
 </script>
 
 <style>
+.divModalBar {
+  background-color: hsl(0, 5%, 96%);
+  height: 40px;
+  width: 60%;
+}
+.divModalBar:focus {
+  outline: none;
+}
+.divModal {
+  cursor: pointer;
+  background-color: #dcdcdc;
+  width: 60%;
+  height: 60px;
+}
 .modal {
   width: 700px;
 }
