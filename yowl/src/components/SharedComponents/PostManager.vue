@@ -3,12 +3,11 @@ SEARCHRESULT §§§{{searchResult}}§§§<br>
 FILTERRESULT §§§{{filterResult}}§§§<br>
 BOTHRESULT §§§{{searchAndFilterResult}}§§§<br>
   <div class="postManager">
-    <EachPost v-for="post in posts" :key="post.id" :post="post" />
+    <EachPost v-for="post in posts" :key="post.id" :post="post" @upvote="upvote" @downvote="downvote"/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
 import EachPost from '@/components/SharedComponents/EachPost.vue'
 
 export default {
@@ -16,6 +15,8 @@ export default {
   name: 'IndexView',
   components: {
     EachPost
+  },
+  methods: {
   }
 }
 </script>
