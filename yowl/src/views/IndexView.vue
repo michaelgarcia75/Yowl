@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+    <p v-if="searchContent"> Research : {{searchContent}}</p>
     <CreatePostButton @save="save" @filesChange="filesChange"/>
     <PostManager :postsFiltered="postsFiltered"/>
     <TopCommunities/>
@@ -16,7 +17,7 @@ import TopCommunities from '@/components/SharedComponents/TopCommunities.vue'
 
 export default {
   name: 'IndexView',
-  props: ['postsFiltered'],
+  props: ['postsFiltered', 'searchContent'],
   components: {
     CreatePostButton,
     PostManager,
