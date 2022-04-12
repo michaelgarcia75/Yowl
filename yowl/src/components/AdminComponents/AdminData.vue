@@ -27,7 +27,6 @@ export default {
     }
   },
   created () {
-    this.getNewUsersToday()
     axios.get('https://yowlteam.herokuapp.com/api/users')
       .then((response) => {
         console.log('users is', response.data)
