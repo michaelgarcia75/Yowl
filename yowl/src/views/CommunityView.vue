@@ -94,7 +94,6 @@
       </div>
   </section>
 </template>
-</template>
 
 <script>
 // @ is an alias to /src

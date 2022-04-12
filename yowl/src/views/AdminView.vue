@@ -1,7 +1,7 @@
 <template>
   <AdminNavButtons></AdminNavButtons>
   <div class="admin">
-    <AdminData/>
+    <AdminData></AdminData>
     <!-- <AdminUsersManager/> -->
   </div>
   <router-view/>
@@ -18,7 +18,6 @@ export default {
   components: {
     AdminData,
     AdminNavButtons
-    // AdminUsersManager
   }
 }
 </script>
