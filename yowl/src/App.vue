@@ -115,20 +115,17 @@ export default {
     // mouted () {
     axios.get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
-        // console.log('posts is', response.data)
         this.posts = response.data
         this.postsFiltered = response.data
       })
       .catch(error => console.log(error))
     axios.get('https://yowlteam.herokuapp.com/api/categories')
       .then((response) => {
-        // console.log('categories is', response.data)
         this.categories = response.data
       })
       .catch(error => console.log(error))
     axios.get('https://yowlteam.herokuapp.com/api/communities')
       .then((response) => {
-        // console.log('communities is', response.data)
         this.communities = response.data
       })
       .catch(error => console.log(error))
