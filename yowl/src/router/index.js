@@ -45,7 +45,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminUsersManager.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminUsersView.vue')
   },
   {
     path: '/admin/posts',
@@ -53,7 +53,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminPostsManager.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminPostsView.vue')
   },
   {
     path: '/admin/comments',
@@ -61,7 +61,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminCommentsManager.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCommentsView.vue')
   },
   {
     path: '/admin/communities',
@@ -69,7 +69,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminCommunitiesManager.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCommunitiesView.vue')
   },
   {
     path: '/admin/categories',
@@ -77,7 +77,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../components/AdminComponents/AdminCategoriesManager.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCategoriesView.vue')
   }
 ]
 
