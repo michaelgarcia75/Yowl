@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Category extends Model
 {
     use HasFactory;
 
@@ -15,13 +15,8 @@ class Post extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'content',
-        'media',
         'user_id',
-        'community_id',
-        'upvotes',
-        'is_reported'
+        'post_id'
     ];
 
     /**
@@ -40,15 +35,4 @@ class Post extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    //For upvotes table
-    public function upvoteUsers()
-    {
-        return $this->belongsToMany(User::class, 'upvotes')->withTimestamps();;
-    }
 }

@@ -1,8 +1,7 @@
 <template>
   <div class="index">
-    MY SEARCH RESULT IS {{searchresult}}
     <CreatePostButton @save="save" @filesChange="filesChange"/>
-    <PostManager :posts="posts" :searchResult="searchResult" :filterResult="filterResult" :searchAndFilterResult="searchAndFilterResult"/>
+    <PostManager :postsFiltered="postsFiltered"/>
     <TopCommunities/>
         <router-link to="/communities">Communities</router-link>
 
@@ -17,7 +16,7 @@ import TopCommunities from '@/components/SharedComponents/TopCommunities.vue'
 
 export default {
   name: 'IndexView',
-  props: ['searchResult', 'filterResult', 'searchAndFilterResult'],
+  props: ['postsFiltered'],
   components: {
     CreatePostButton,
     PostManager,
@@ -64,19 +63,19 @@ export default {
     // mouted () {
     axios.get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
-        console.log('posts is', response.data)
+        // console.log('posts is', response.data)
         this.posts = response.data
       })
       .catch(error => console.log(error))
     axios.get('https://yowlteam.herokuapp.com/api/categories')
       .then((response) => {
-        console.log('categories is', response.data)
+        // console.log('categories is', response.data)
         this.categories = response.data
       })
       .catch(error => console.log(error))
     axios.get('https://yowlteam.herokuapp.com/api/communities')
       .then((response) => {
-        console.log('communities is', response.data)
+        // console.log('communities is', response.data)
         this.communities = response.data
       })
       .catch(error => console.log(error))

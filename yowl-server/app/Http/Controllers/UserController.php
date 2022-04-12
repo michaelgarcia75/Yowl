@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Community;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -64,5 +66,10 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+    }
+
+    public function getUsersByCommunity ($CommunityId) {
+        $users = Community::find($CommunityId)->users;
+        return $users;
     }
 }

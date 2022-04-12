@@ -41,9 +41,11 @@ import axios from 'axios'
 
 const isOn = ref(false)
 const isOpen = ref(true)
+
 </script>
 
 <script>
+const character = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
 export default {
   data () {
     return {
@@ -58,7 +60,7 @@ export default {
         alert('Minimum 8 characters.')
         this.errors.push()
       }
-      if (this.newEmail.length < 2) {
+      if (!character.test(this.newEmail)) {
         alert('Please enter a valid email address')
         this.errors.push()
       }

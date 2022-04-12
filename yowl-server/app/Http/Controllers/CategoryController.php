@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Community;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -64,5 +66,11 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+    }
+
+    public function getTopFiveCategories()
+    {
+        $categories = Category::withCount('communities')->orderBy('communities_count', 'desc')->take(5)->get();
+        return $categories;
     }
 }
