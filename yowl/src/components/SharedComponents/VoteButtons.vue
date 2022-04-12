@@ -1,5 +1,6 @@
 <template>
-  <img class="image" width="12" min-width="10" @click="changeUpvote(userId, post.id)" src="../../assets/up-arrow.png" />
+  <img class="image" v-if="arrowColor === false" width="12" min-width="10" @click="changeUpvote(userId, post.id)" src="../../assets/up-arrow.png" />
+  <img class="image" v-if="arrowColor === true" width="12" min-width="10" @click="changeUpvote(userId, post.id)" src="../../assets/up-arrow-black.png" />
   <p>{{ postUpvotes }}</p>
   <!-- <img class="image" width="12" min-width="10" @click="$emit('downvote', post.id)" src="../../assets/down-arrow.png" /> -->
 </template>
@@ -12,7 +13,8 @@ export default {
     return {
       upvoteJoint: [],
       postUpvotes: this.post.upvotes,
-      userId: 1
+      userId: 1,
+      arrowColor: false
     }
   },
   methods: {
@@ -27,9 +29,12 @@ export default {
             console.log('YESYES')
             axios.delete('https://yowlteam.herokuapp.com/api/upvotes',
               {
-                user_id: userId,
-                post_id: postId
+                data: {
+                  user_id: userId,
+                  post_id: postId
+                }
               })
+            this.arrowColor = false
             axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
               {
                 upvotes: this.postUpvotes - 1
@@ -44,6 +49,7 @@ export default {
               }).then((response) => {
               console.log('response is', response)
               this.upvoteJoint.push(response)
+              this.arrowColor = true
             })
             axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
               {
