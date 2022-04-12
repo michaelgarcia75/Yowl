@@ -48,7 +48,7 @@ export default {
   created () {
     axios.get('https://yowlteam.herokuapp.com/api/users')
       .then((response) => {
-        console.log('users is', response.data)
+        // console.log('users is', response.data)
         this.users = response.data
         this.NewUsersToday = this.users.filter((user) => user.created_at.substring(0, 10) === this.getCurrentDate())
         this.averageUsersAndPosts()
