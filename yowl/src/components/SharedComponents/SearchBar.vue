@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  props: ['searchResult', 'filterResult'],
+  props: [''],
   data () {
     return {
       searchContent: '',

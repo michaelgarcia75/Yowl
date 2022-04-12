@@ -1,9 +1,6 @@
 <template>
-SEARCHRESULT §§§{{searchResult}}§§§<br>
-FILTERRESULT §§§{{filterResult}}§§§<br>
-BOTHRESULT §§§{{searchAndFilterResult}}§§§<br>
   <div class="postManager">
-    <EachPost v-for="post in posts" :key="post.id" :post="post" @upvote="upvote" @downvote="downvote"/>
+    <EachPost v-for="post in postsFiltered" :key="post.id" :post="post"/>
   </div>
 </template>
 
@@ -11,10 +8,14 @@ BOTHRESULT §§§{{searchAndFilterResult}}§§§<br>
 import EachPost from '@/components/SharedComponents/EachPost.vue'
 
 export default {
-  props: ['searchResult', 'filterResult', 'searchAndFilterResult', 'posts'],
+  props: ['postsFiltered'],
   name: 'IndexView',
   components: {
     EachPost
+  },
+  data () {
+    return {
+    }
   },
   methods: {
   }
