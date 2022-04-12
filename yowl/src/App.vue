@@ -76,7 +76,7 @@ export default {
     getPostByCategoryFilter (categoryId) {
       // if (this.searchResult == null) {
       console.log('I am in get post by  filter categoryId is ', this.searchResult)
-      axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + categoryId)
+      axios.get('https://yowlteam.herokuapp.com/api/posts/filter?category=' + categoryId)
         .then((response) => {
           this.filterResult = [...response.data]
           this.postsFiltered = [...response.data]
