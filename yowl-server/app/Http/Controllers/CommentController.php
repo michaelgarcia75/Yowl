@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\User;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -64,5 +66,15 @@ class CommentController extends Controller
     public function destroy(Comment $comment)
     {
         $comment->delete();
+    }
+
+    public function getCommentsByUser ($UserId) {
+        $comments = User::find($UserId)->comments;
+        return $comments;
+    }
+
+    public function getCommentsByPost ($PostId) {
+        $comments = Post::find($PostId)->comments;
+        return $comments;
     }
 }

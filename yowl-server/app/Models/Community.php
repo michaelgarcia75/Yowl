@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use App\User;
 
 class Community extends Model
 {
@@ -38,4 +39,19 @@ class Community extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'community_users');
+    }
+
+    public function category()
+    {
+        return $this->belongTo(Category::class,'category_id');
+    }         
 }
