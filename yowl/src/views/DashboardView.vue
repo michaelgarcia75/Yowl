@@ -6,8 +6,8 @@
           <p>COMMENTS</p>
           <p>UPVOTES</p>
         </div>
-        <!--<PostManager />
-        <CommentsManager/>
+        <PostManager :postsFiltered="postsFiltered"/>
+        <!--<CommentsManager/>
         <UpVotedPostsManager/> -->
 
     </div>
@@ -15,18 +15,34 @@
 
 <script>
 // @ is an alias to /src
+import axios from 'axios'
 import UserSettings from '@/components/SpecialComponents/UserSettings.vue'
-// import PostManager from '@/components/SharedComponents/PostManager.vue'
+import PostManager from '@/components/SharedComponents/PostManager.vue'
 // import CommentsManager from '@/components/SharedComponents/CommentsManager.vue'
 // import UpVotedPostsManager from '@/components/SharedComponents/UpVotedPostsManager.vue'
 
 export default {
   name: 'AdminView',
+  data () {
+    return {
+      postsFiltered: [],
+      userId: 1
+    }
+  },
   components: {
-    UserSettings
-    // PostManager,
+    UserSettings,
+    PostManager
     // CommentsManager,
     // UpVotedPostsManager
+  },
+  created () {
+    axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
+      .then((response) => {
+        console.log('posts is', response.data)
+        this.postsFiltered = response.data
+        console.log('post filtered is', this.postsFiltered)
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>
