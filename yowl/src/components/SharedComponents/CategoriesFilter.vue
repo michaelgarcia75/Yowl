@@ -1,9 +1,9 @@
 <template>
   <div>
     <DropDownMenu menu-title="Filter by category">
-      <!-- <section class="option"> -->
-        <!-- <button @click="$emit('getPostByCategoryFilter', null)">All categories</button> -->
-      <!-- </section> -->
+      <section class="option">
+        <button @click="$emit('getPostByCategoryFilter', null)">All categories</button>
+      </section>
       <div v-for="category in categories" :key="category.id">
         <section class="option">
           <button @click="$emit('getPostByCategoryFilter', category.id)">{{ category.name }}</button>
