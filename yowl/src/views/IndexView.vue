@@ -2,7 +2,7 @@
   <div class="index">
     MY SEARCH RESULT IS {{searchresult}}
     <CreatePostButton @save="save" @filesChange="filesChange"/>
-    <PostManager :posts="posts" :searchResult="searchResult" :filterResult="filterResult" :searchAndFilterResult="searchAndFilterResult" @upvote="upvote" @downvote="downvote"/>
+    <PostManager :posts="posts" :searchResult="searchResult" :filterResult="filterResult" :searchAndFilterResult="searchAndFilterResult"/>
     <TopCommunities/>
         <router-link to="/communities">Communities</router-link>
 
@@ -31,21 +31,6 @@ export default {
     }
   },
   methods: {
-    upvote (postId) {
-      console.log('GO UPVOTE !!!')
-      console.log('this is my postId', postId)
-      console.log(this.posts.upvotes)
-      axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
-        {
-          upvotes: this.posts.upvotes += 1
-        })
-    },
-    downvote (postId) {
-      axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
-        {
-          upvotes: this.posts[postId].upvotes -= 1
-        })
-    }
     // save (formData) {
     //   // upload data to the server
     //   this.currentStatus = 1
