@@ -1,7 +1,4 @@
 <template>
-SEARCHRESULT §§§{{searchResult}}§§§<br>
-FILTERRESULT §§§{{filterResult}}§§§<br>
-BOTHRESULT §§§{{searchAndFilterResult}}§§§<br>
   <div class="postManager">
     <EachPost v-for="post in postsFiltered" :key="post.id" :post="post"/>
   </div>
@@ -15,6 +12,10 @@ export default {
   name: 'IndexView',
   components: {
     EachPost
+  },
+  data () {
+    return {
+    }
   },
   methods: {
   }
