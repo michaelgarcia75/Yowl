@@ -1,26 +1,71 @@
 <template>
     <div class="dashboard">
         <UserSettings/>
-        <PostManager/>
-        <CommentsManager/>
-        <UpVotedPostsManager/>
+        <div class="postLinks">
+          <p>POSTS</p>
+          <p>COMMENTS</p>
+          <p>UPVOTES</p>
+        </div>
+        <PostManager :postsFiltered="postsFiltered"/>
+        <!--<CommentsManager/>
+        <UpVotedPostsManager/> -->
+
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import axios from 'axios'
 import UserSettings from '@/components/SpecialComponents/UserSettings.vue'
 import PostManager from '@/components/SharedComponents/PostManager.vue'
-import CommentsManager from '@/components/SharedComponents/CommentsManager.vue'
-import UpVotedPostsManager from '@/components/SharedComponents/UpVotedPostsManager.vue'
+// import CommentsManager from '@/components/SharedComponents/CommentsManager.vue'
+// import UpVotedPostsManager from '@/components/SharedComponents/UpVotedPostsManager.vue'
 
 export default {
   name: 'AdminView',
+  data () {
+    return {
+      postsFiltered: [],
+      userId: 1
+    }
+  },
   components: {
     UserSettings,
-    PostManager,
-    CommentsManager,
-    UpVotedPostsManager
+    PostManager
+    // CommentsManager,
+    // UpVotedPostsManager
+  },
+  created () {
+    axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
+      .then((response) => {
+        console.log('posts is', response.data)
+        this.postsFiltered = response.data
+        console.log('post filtered is', this.postsFiltered)
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>
+
+<style scoped>
+.postLinks{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+.postLinks p{
+  margin-right: 13px;
+  font-size: 25px;
+  cursor: pointer;
+}
+.postLinks p:hover{
+  text-decoration: underline;
+  color: rgb(14, 164, 233);
+
+}
+.dashboard{
+  margin-left: 25%;
+}
+
+</style>
