@@ -1,5 +1,4 @@
 <template>
-    This is from Admin Categories View
     <AdminCategoriesManager></AdminCategoriesManager>
 </template>
 
