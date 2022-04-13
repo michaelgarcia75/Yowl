@@ -1,5 +1,4 @@
 <template>
-    This is from Admin Communities View
     <AdminCommunitiesManager></AdminCommunitiesManager>
 </template>
 
