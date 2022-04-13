@@ -2,7 +2,8 @@
 <div class="userSetting">
 <div class="settingTitle">
     <h1>Account Settings</h1>
-    <button class="editButton" @click="isOn=true, isOpen=false">Edit</button>
+    <button class="editButton" v-if="isOpen" @click="isOn=true, isOpen=false">Edit</button>
+    <button class="returnButton" v-if="isOn" @click="isOn=false, isOpen=true">Return</button>
     </div>
 <div class="settingContent" v-if="isOpen">
     <img id="userImage" src="./hamzabg.jpg" />
@@ -25,11 +26,11 @@
         <h1>Email Adress</h1>
          <input type="email" id="email" v-model="newEmail" :placeholder="users[0]?.email">
         <h1>Password</h1>
-        <input type="password" placeholder="********">
+        <input type="password" id="password" v-model="newPassword" placeholder="********">
          <h1>Confirmation</h1>
-        <input type="password" placeholder="********">
+        <input type="password" id="confirmation" v-model="confirmation" placeholder="********">
         <br>
-        <button class="submitButton" @click="editUser(users[0].id, newPseudo, newEmail), isOn=false, isOpen=true">Submit</button>
+        <button class="submitButton" @click="editUser(users[0].id, newPseudo, newEmail, newPassword, confirmation), isOn=false, isOpen=true">Submit</button>
     </div>
 </div>
 </div>
@@ -55,13 +56,29 @@ export default {
     }
   },
   methods: {
-    editUser (userId, newPseudo, newEmail) {
-      if (this.newPseudo.length < 8 && this.newPseudo.length > 0) {
-        alert('Minimum 8 characters.')
+    editUser (userId, newPseudo, newEmail, newPassword, confirmation) {
+      if (newPseudo === undefined && newPassword === undefined) {
+        alert('Fields Empty')
         this.errors.push()
       }
-      if (!character.test(this.newEmail)) {
+      if (newPseudo === undefined || newPseudo.length === 0) {
+        alert('Username Field Empty')
+        this.errors.push()
+      }
+      if (newPassword === undefined || newPassword.length === 0) {
+        alert('Password Field Empty')
+        this.errors.push()
+      }
+      if (newPseudo.length < 8 && newPseudo.length > 0) {
+        alert('Username Minimum 8 characters.')
+        this.errors.push()
+      }
+      if (!character.test(newEmail)) {
         alert('Please enter a valid email address')
+        this.errors.push()
+      }
+      if (newPassword !== confirmation) {
+        alert('Password and Confirmation are not identical')
         this.errors.push()
       }
       axios.put('https://yowlteam.herokuapp.com/api/users/' + userId, {
@@ -122,9 +139,10 @@ export default {
     justify-content: flex-start;
     height: 200px;
     width: 100%;
-    border: 2px solid blue;
+    border: 5px solid aquamarine;
     border-radius: 5px;
     margin: 0;
+    background-color: antiquewhite;
 }
 
 #userImage{
@@ -167,5 +185,15 @@ export default {
     color: black;
     width: 60px;
     height: fit-content;
+}
+.returnButton{
+    display: inline-block;
+    flex-direction: row;
+    border-radius: 5px;
+    background-color: red;
+    color: black;
+    width: 60px;
+    height: fit-content;
+    position: relative;
 }
 </style>
