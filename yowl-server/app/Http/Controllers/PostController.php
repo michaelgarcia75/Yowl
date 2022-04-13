@@ -85,16 +85,24 @@ class PostController extends Controller
     {
         $text = $request->input('text');
         $category_id = $request->input('category');
-        $posts = DB::table('posts');
 
-        if ($text) {
-            $posts = $posts->where('title', 'LIKE', "%{$text}%")->orWhere('content', 'LIKE', "%{$text}%");
+        if ($text && !$category_id) {
+            $posts = Post::where('title', 'LIKE', "%{$text}%")->orWhere('content', 'LIKE', "%{$text}%")->get();
         }
-        if ($category_id) {
+        if (!$text && $category_id) {
             $communityIdsArray = Community::where('category_id', $category_id)->pluck('id')->toArray();
-            $posts = $posts->whereIn('community_id', $communityIdsArray);
+            $posts = Post::whereIn('community_id', $communityIdsArray)->get();
         }
-        return $posts->get();
+        if ($text && $category_id) {
+            $communityIdsArray = Community::where('category_id', $category_id)->pluck('id')->toArray();
+            $posts = Post::where(function ($query) use ($text) {
+                $query->where('title', 'LIKE', "%{$text}%")->orWhere('content', 'LIKE', "%{$text}%");
+            })->whereIn('community_id', $communityIdsArray)->get();
+        }
+        if (!$text && !$category_id)
+            $posts = Post::all();
+
+        return $posts;
     }
 
     public function getUpvotedPostsByUser($user_id)

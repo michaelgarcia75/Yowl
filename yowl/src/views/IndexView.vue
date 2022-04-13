@@ -34,7 +34,6 @@ export default {
     // save (formData) {
     //   // upload data to the server
     //   this.currentStatus = 1
-
     //   upload(formData)
     //     .then(x => {
     //       this.uploadedFiles = [].concat(x)
@@ -62,24 +61,27 @@ export default {
   created () {
     // },
     // mouted () {
-    axios.get('https://yowlteam.herokuapp.com/api/posts')
+    axios
+      .get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
         // console.log('posts is', response.data)
         this.posts = response.data
       })
-      .catch(error => console.log(error))
-    axios.get('https://yowlteam.herokuapp.com/api/categories')
+      .catch((error) => console.log(error))
+    axios
+      .get('https://yowlteam.herokuapp.com/api/categories')
       .then((response) => {
         // console.log('categories is', response.data)
         this.categories = response.data
       })
-      .catch(error => console.log(error))
-    axios.get('https://yowlteam.herokuapp.com/api/communities')
+      .catch((error) => console.log(error))
+    axios
+      .get('https://yowlteam.herokuapp.com/api/communities')
       .then((response) => {
         // console.log('communities is', response.data)
         this.communities = response.data
       })
-      .catch(error => console.log(error))
+      .catch((error) => console.log(error))
   }
 }
 </script>
