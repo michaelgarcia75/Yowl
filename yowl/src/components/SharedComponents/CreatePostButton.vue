@@ -1,144 +1,199 @@
 <template>
-  I'm the createPost button !
-  <div class="divModal" @click="showModal">
-    <input class="divModalBar" :readonly="readonly" placeholder="New post ..."/>
-    <img class="image" width="30" min-width="10"
-                src="../../assets/img.png"
-                />
+  <p>
+    <b><u>Communities</u></b>
+  </p>
+  <button @click="isOpen = true" class="tc-note-open">
+    Create a Post
+  </button>
+  <div class="Posts">
+    <CommunitiesManager
+    />
   </div>
-
-  <ModalTemplate v-show="isModalVisible" @close="closeModal">
-    <template v-slot:header>Create new post</template>
-    <template v-slot:body>
-      title :
-      <input class="createPostTitle" v-model="newPostTitle" />
-      <br />Content :
-      <input class="createPostContent" v-model="newPostContent" />
-      <div class="container">
-      <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-        <h1>Upload images</h1>
-        <div class="dropbox">
-          <input
-            type="file"
-            multiple
-            :name="uploadFieldName"
-            :disabled="isSaving"
-            @change="$emit('filesChange', $event.target.name, $event.target.files); fileCount = $event.target.files.length"
-            accept="image/*"
-            class="input-file"
-          />
-          <p v-if="isInitial">
-            Drag your file(s) here to begin
-            <br />or click to browse
-          </p>
-          <p v-if="isSaving">Uploading {{ fileCount }} files...</p>
-        </div>
-      </form>
+  <!-- <button @click="isOpen = true" class="tc-note-open">
+    Create a Community
+  </button> -->
+  <div class="modal" v-if="isOpen">
+    <div class="tc-note">
+      <span @click="isOpen = false" class="tc-note-close"> ↩️ </span>
+      <div class="tc-note-header">
+        <input
+          v-model="postTitle"
+          type="text"
+          placeholder="Post Title"
+          ref="postTitle"
+        />
       </div>
-    </template>
-    <template v-slot:footer>
-      <button>Create post</button>
-    </template>
-  </ModalTemplate>
+      <div class="tc-note-body">
+        <textarea
+          v-model="postContent"
+          type="text"
+          placeholder="Post Content"
+          ref="postContent"
+        />
+      </div>
+      <div class="tc-note-footer">
+        <img class="postPicture" :src="this.image" />
+        <br />
+        <button class="btn btn-info" @click="onPickFile">
+          Upload community picture
+        </button>
+        <input
+          type="file"
+          style="display: none"
+          ref="fileInput"
+          accept="image/*"
+          @change="onFilePicked"
+        />
+        <br />
+        <CategoriesFilter :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
+        <br />
+        <button class="create" @click="createPost(postTitle, postContent, categoryId)" type="submit">
+          Create
+        </button>
+      </div>
+    </div>
+  </div>
+  <router-view />
 </template>
+<script setup>
+import { ref } from 'vue'
+import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
+import axios from 'axios'
 
+const isOpen = ref(false)
+</script>
 <script>
-import ModalTemplate from './ModalTemplate.vue'
-
-const STATUS_INITIAL = 0
-const STATUS_SAVING = 1
-const STATUS_SUCCESS = 2
-const STATUS_FAILED = 3
 export default {
-  name: 'IndexView',
+  name: 'AdminView',
   components: {
-    ModalTemplate
+    CategoriesFilter
   },
+
+  props: [],
   data () {
     return {
-      isModalVisible: false,
-      uploadedFiles: [],
-      uploadError: null,
-      currentStatus: null,
-      uploadFieldName: 'photos'
-
-    }
-  },
-  computed: {
-    isInitial () {
-      return this.currentStatus === STATUS_INITIAL
-    },
-    isSaving () {
-      return this.currentStatus === STATUS_SAVING
-    },
-    isSuccess () {
-      return this.currentStatus === STATUS_SUCCESS
-    },
-    isFailed () {
-      return this.currentStatus === STATUS_FAILED
+      image: null,
+      postTitle: '',
+      postContent: '',
+      imagePath: this.image
     }
   },
   methods: {
-    showModal () {
-      this.isModalVisible = true
+    onPickFile () {
+      this.$refs.fileInput.click()
     },
-    closeModal () {
-      this.isModalVisible = false
+    onFilePicked (event) {
+      const files = event.target.files
+      // const filename = files[0].name
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.image = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.imageUrl = files[0]
     },
-    reset () {
-      // reset form to initial state
-      this.currentStatus = 0
-      this.uploadedFiles = []
-      this.uploadError = null
+    createPost (title, content) {
+      console.log('title is ', title)
+      console.log('description is ', content)
+      console.log('image path is ', this.imageUrl.name)
+      if (this.postTitle !== '') {
+        const picture = this.imageUrl.name
+        axios.post('https://yowlteam.herokuapp.com/api/posts',
+          {
+            title: title,
+            content: content,
+            media: picture,
+            category_id: this.categoryId
+          }).then((data) => {
+          console.log(data)
+          window.location.reload()
+        })
+        this.postTitle = title
+      }
+    },
+    getPostByCategoryFilter (categoryId) {
+      this.categoryId = categoryId
     }
   },
-  mounted () {
-    this.reset()
+  created () {
+    // },
+    // mouted () {
+    axios.get('https://yowlteam.herokuapp.com/api/posts')
+      .then((response) => {
+        this.posts = response.data
+      })
+      .catch(error => console.log(error))
+    axios.get('https://yowlteam.herokuapp.com/api/categories')
+      .then((response) => {
+        this.categories = response.data
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>
 
-<style>
-.divModalBar {
-  background-color: hsl(0, 5%, 96%);
-  height: 40px;
-  width: 60%;
-}
-.divModalBar:focus {
-  outline: none;
-}
-.divModal {
-  cursor: pointer;
-  background-color: #dcdcdc;
-  width: 60%;
-  height: 60px;
-}
+<style  scoped>
 .modal {
-  width: 700px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000000;
 }
-.dropbox {
-    outline: 2px dashed grey; /* the dash box */
-    outline-offset: -10px;
-    background: lightcyan;
-    color: dimgray;
-    padding: 10px 10px;
-    min-height: 200px; /* minimum height */
-    position: relative;
-    cursor: pointer;
-  }
-  .input-file {
-    opacity: 0; /* invisible but it's there! */
-    width: 100%;
-    height: 200px;
-    position: absolute;
-    cursor: pointer;
-  }
-  .dropbox:hover {
-    background: lightblue; /* when mouse over to the drop zone, change color */
-  }
-  .dropbox p {
-    font-size: 1.2em;
-    text-align: center;
-    padding: 50px 0;
-  }
+
+.modal > div {
+  padding: 50px;
+  width: 50%;
+  height: 50%;
+  border-color: 3px black;
+  display: center;
+}
+.tc-note {
+  background-color: white;
+  width: 280px;
+  height: 280px;
+  margin: 30px 10px 20px;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s;
+  cursor: pointer;
+  font-family: "Caveat", cursive;
+}
+
+.tc-note-header {
+  padding: 10px 16px 0;
+}
+
+.tc-note-close {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  line-height: 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.tc-note-body {
+  outline: 0;
+}
+
+.tc-note-body {
+  font-size: 20px;
+  padding: 10px 16px 16px;
+}
+.tc-note-open {
+  border-radius: 5%;
+  color: black;
+}
+.postPicture {
+  width: 100px;
+  height: 100px;
+}
 </style>
