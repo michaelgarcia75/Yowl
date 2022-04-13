@@ -32,12 +32,12 @@ export default {
     }
   },
   created () {
+    this.moment = moment
     axios.get('https://yowlteam.herokuapp.com/api/comments/post/' + this.post.id)
       .then((response) => {
         // console.log('comments is', response.data)
         this.commentsFiltered = response.data
         // console.log('comments filtered is', this.commentsFiltered)
-        this.moment = moment
       })
       .catch(error => console.log(error))
 

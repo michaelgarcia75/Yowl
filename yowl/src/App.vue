@@ -112,6 +112,7 @@ export default {
           axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + this.searchContent + '&category=' + categoryId)
             .then((response) => {
               this.postsFiltered = [...response.data]
+              console.log(response.data)
             })
         }
       }
