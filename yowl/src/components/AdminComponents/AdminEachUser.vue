@@ -87,15 +87,15 @@ export default {
       }
     },
     CloseUserEditForm () {
-      console.log('in close')
-      console.log('user naem is ', this.user.pseudo, 'user email is ', this.user.email, 'user role is ', this.userNewRole)
+      // console.log('in close')
+      // console.log('user naem is ', this.user.pseudo, 'user email is ', this.user.email, 'user role is ', this.userNewRole)
       this.userEditForm = !this.userEditForm
       this.userNewName = this.user.pseudo
       this.userNewEmail = this.user.email
       this.userNewRole = this.user.is_admin
       this.ChangeRoleOption()
-      console.log('AFTERRRRR in close')
-      console.log('user name is ', this.userNewName, 'user email is ', this.userNewEmail, 'user role is ', this.userNewRole)
+      // console.log('AFTERRRRR in close')
+      // console.log('user name is ', this.userNewName, 'user email is ', this.userNewEmail, 'user role is ', this.userNewRole)
     }
   },
   created () {

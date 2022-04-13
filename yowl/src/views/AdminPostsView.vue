@@ -1,5 +1,4 @@
 <template>
-    This is from Admin Posts View
     <AdminPostsManager></AdminPostsManager>
 </template>
 

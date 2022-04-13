@@ -43,6 +43,8 @@ export default {
       const diffDays = this.daysSinceStart()
       this.AVGUsers = totalUsers / diffDays
       this.AVGPosts = totalPosts / diffDays
+      this.AVGUsers = this.AVGUsers.toFixed(0)
+      this.AVGPosts = this.AVGPosts.toFixed(0)
     }
   },
   created () {
