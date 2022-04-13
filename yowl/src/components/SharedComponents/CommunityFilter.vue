@@ -1,12 +1,9 @@
 <template>
   <div>
-    <DropDownMenu menu-title="Filter by category">
-      <section v-if="filterAll === true" class="option">
-        <button @click="$emit('getPostByCategoryFilter', null)">All categories</button>
-      </section>
+    <DropDownMenu menu-title="Filter by community">
       <div v-for="category in categories" :key="category.id">
         <section class="option">
-          <button @click="$emit('getPostByCategoryFilter', category.id)">{{ category.name }}</button>
+          <button @click="$emit('getPostByCommunityFilter', community.id)">{{ category.name }}</button>
         </section>
       </div>
     </DropDownMenu>
@@ -19,7 +16,7 @@ export default {
   components: {
     DropDownMenu
   },
-  props: ['categories', 'filterAll'],
+  props: ['categories'],
   data () {
     return {
     }

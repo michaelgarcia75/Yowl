@@ -2,9 +2,12 @@
   <p>
     <b><u>Communities</u></b>
   </p>
-  <button @click="isOpen = true" class="tc-note-open">
-    Create a Post
-  </button>
+  <div @click="isOpen = true" class="divModal">
+    <input class="divModalBar" :readonly="readonly" placeholder="New post ..."/>
+    <img class="image" width="30" min-width="10"
+    src="../../assets/img.png"
+    />
+  </div>
   <div class="Posts">
     <CommunitiesManager
     />
@@ -45,7 +48,7 @@
           @change="onFilePicked"
         />
         <br />
-        <CategoriesFilter :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
+        <CommunityFilter :community="community" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
         <br />
         <button class="create" @click="createPost(postTitle, postContent, categoryId)" type="submit">
           Create
@@ -57,7 +60,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
+import CommunityFilter from '@/components/SharedComponents/CommunityFilter.vue'
 import axios from 'axios'
 
 const isOpen = ref(false)
@@ -66,7 +69,7 @@ const isOpen = ref(false)
 export default {
   name: 'AdminView',
   components: {
-    CategoriesFilter
+    CommunityFilter
   },
 
   props: [],
@@ -133,6 +136,20 @@ export default {
 </script>
 
 <style  scoped>
+divModalBar {
+  background-color: hsl(0, 5%, 96%);
+  height: 40px;
+  width: 60%;
+}
+.divModalBar:focus {
+  outline: none;
+}
+.divModal {
+  cursor: pointer;
+  background-color: #dcdcdc;
+  width: 60%;
+  height: 60px;
+}
 .modal {
   position: fixed;
   top: 0;

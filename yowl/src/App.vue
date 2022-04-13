@@ -4,7 +4,7 @@
       <img alt="Vue logo" src="./assets/logo.png">
     </router-link>
     <SearchBar @getPostBySearch="getPostBySearch"/>
-    <CategoriesFilter :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
+    <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
     <router-link to="/admin">Admin</router-link> |
     <DropDownMenu menu-title="Menu">
       <section class="option">
@@ -46,7 +46,8 @@ export default {
       communities: [],
       postsFiltered: this.posts,
       categoryId: 0,
-      searchContent: ''
+      searchContent: '',
+      filterAll: true
     }
   },
   components: {
