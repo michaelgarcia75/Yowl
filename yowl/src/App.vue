@@ -23,10 +23,6 @@
         <span class="desc">Dark mode // OPTION</span>
       </section>
     </DropDownMenu>
-        MY SEARCH RESULT IS {{searchResult}}<br>
-        MY FILTER RESULT IS {{filterResult}}<br>
-        MY SEARCH-FILTER RESULT IS {{searchAndFilterResult}}<br>
-        <!-- MY postsFiltered IS {{postsFiltered}}<br> -->
 
   </nav>
   <router-view :postsFiltered="postsFiltered" :searchContent="searchContent"/>
@@ -61,17 +57,21 @@ export default {
   },
   methods: {
     getPostBySearch (searchContent) {
+      console.log('A')
       this.searchContent = searchContent
       if (this.categoryId === 0) {
-        console.log('POST BY SEARCH 1', searchContent)
+        console.log('A1')
+
+        // console.log('POST BY SEARCH 1', searchContent)
         axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
           .then((response) => {
             this.searchResult = [...response.data]
             this.postsFiltered = [...response.data]
-            console.log('my searchResult is', response.data)
+            // console.log('my searchResult is', response.data)
           })
       } else {
-        console.log('POST BY SEARCH 2', searchContent, 'AND', this.categoryId)
+        console.log('A2')
+        // console.log('POST BY SEARCH 2 "', searchContent, '" AND', this.categoryId)
         axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent + '&category=' + this.categoryId)
           .then((response) => {
             this.postsFiltered = [...response.data]
@@ -80,54 +80,67 @@ export default {
     },
     // /!\ situation when you enter searchContent and filterContent at the same time is missing !!!
     getPostByCategoryFilter (categoryId = null) {
-      // if (this.searchResult == null) {
-      if (categoryId === null) {
-        console.log('POST BY FILTER ALL')
-        axios.get('https://yowlteam.herokuapp.com/api/posts')
-          .then((response) => {
-            this.posts = response.data
-            this.postsFiltered = response.data
-          })
-          .catch(error => console.log(error))
+      console.log('B')
+      if (this.searchContent === '') {
+        console.log('B1')
+        if (categoryId === null) {
+          console.log('B1a')
+          // console.log('POST BY FILTER ALL')
+          axios.get('https://yowlteam.herokuapp.com/api/posts')
+            .then((response) => {
+              this.posts = response.data
+              this.postsFiltered = response.data
+            })
+            .catch(error => console.log(error))
+        } else {
+          console.log('B1b')
+          // console.log('I am in get post by filter categoryId is ', this.searchResult)
+          axios.get('https://yowlteam.herokuapp.com/api/posts/filter?category=' + categoryId)
+            .then((response) => {
+              this.categoryId = categoryId
+              this.postsFiltered = [...response.data]
+              // console.log('my category name is', categoryId)
+            })
+        }
       } else {
-        console.log('I am in get post by filter categoryId is ', this.searchResult)
-        axios.get('https://yowlteam.herokuapp.com/api/posts/filter?category=' + categoryId)
-          .then((response) => {
-            this.categoryId = categoryId
-            this.postsFiltered = [...response.data]
-            console.log('my category name is', categoryId)
-          })
-      }
-      // } else {
-      // this.getPostBySearchAndCategoryFilter(this.searchResult, categoryId)
-    },
-    getPostBySearchAndCategoryFilter (searchContent, categoryId) {
-      axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
-        .then((response) => {
-          this.searchResult = [...response.data]
-        })
-      console.log('I am in get pot by search AND filter', searchContent, categoryId)
-      axios.get('https://yowlteam.herokuapp.com/api/posts/filter?' + searchContent)
-        .then((response) => {
-          this.searchResult = [...response.data]
-        })
-      axios.get('https://yowlteam.herokuapp.com/api/posts/filter?' + categoryId)
-        .then((response) => {
-          this.filterResult = [...response.data]
-        })
-      for (let i = 0; i < this.searchResult.length; i++) {
-        for (let j = 0; j < this.filterResult.length; j++) {
-          if (this.searchResult[i] === this.filterResult[j]) {
-            this.searchAndFilterResult.push(this.searchResult[i])
-          }
+        console.log('B2')
+        if (categoryId === null) {
+          console.log('B2a')
+          this.getPostBySearch(this.searchContent)
+        } else {
+          console.log('B2b')
+          axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + this.searchContent + '&category=' + categoryId)
+            .then((response) => {
+              this.postsFiltered = [...response.data]
+            })
         }
       }
     }
+    // getPostBySearchAndCategoryFilter (searchContent, categoryId) {
+    //   axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
+    //     .then((response) => {
+    //       this.searchResult = [...response.data]
+    //     })
+    //   console.log('I am in get pot by search AND filter', searchContent, categoryId)
+    //   axios.get('https://yowlteam.herokuapp.com/api/posts/filter?' + searchContent)
+    //     .then((response) => {
+    //       this.searchResult = [...response.data]
+    //     })
+    //   axios.get('https://yowlteam.herokuapp.com/api/posts/filter?' + categoryId)
+    //     .then((response) => {
+    //       this.filterResult = [...response.data]
+    //     })
+    //   for (let i = 0; i < this.searchResult.length; i++) {
+    //     for (let j = 0; j < this.filterResult.length; j++) {
+    //       if (this.searchResult[i] === this.filterResult[j]) {
+    //         this.searchAndFilterResult.push(this.searchResult[i])
+    //       }
+    //     }
+    //   }
+    // }
   },
   created () {
     this.getPostBySearch()
-    // },
-    // mouted () {
     axios.get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
         this.posts = response.data

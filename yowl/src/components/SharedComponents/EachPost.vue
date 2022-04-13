@@ -1,5 +1,6 @@
 <template>
   <div class="eachPost">
+    <p>{{community.name}} Posted by USERNAME {{moment(date).fromNow()}}</p>
     <h1>{{ post.title }}</h1>
     <br />
     {{ post.content }}
@@ -11,9 +12,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import VoteButtons from '@/components/SharedComponents/VoteButtons.vue'
+import moment from 'moment'
 import axios from 'axios'
+import VoteButtons from '@/components/SharedComponents/VoteButtons.vue'
 import CommentsManager from '@/components/SharedComponents/CommentsManager.vue'
 
 export default {
@@ -25,7 +26,9 @@ export default {
   },
   data () {
     return {
-      commentsFiltered: []
+      commentsFiltered: [],
+      community: [],
+      date: this.post.created_at
     }
   },
   created () {
@@ -34,6 +37,13 @@ export default {
         // console.log('comments is', response.data)
         this.commentsFiltered = response.data
         // console.log('comments filtered is', this.commentsFiltered)
+        this.moment = moment
+      })
+      .catch(error => console.log(error))
+
+    axios.get('https://yowlteam.herokuapp.com/api/communities/' + this.post.community_id)
+      .then((response) => {
+        this.community = response.data
       })
       .catch(error => console.log(error))
   }
@@ -46,4 +56,5 @@ export default {
   padding: 10px;
   margin: 20px;
 }
+
 </style>

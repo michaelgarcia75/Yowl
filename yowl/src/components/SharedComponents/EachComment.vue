@@ -21,7 +21,10 @@ export default {
 <style scoped>
 .eachComment {
   background-color: antiquewhite;
+  width: 50%;
   padding: 10px;
   margin: 20px;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 </style>
