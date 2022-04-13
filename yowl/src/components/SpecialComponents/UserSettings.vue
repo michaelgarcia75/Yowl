@@ -5,7 +5,7 @@
     <button class="editButton" @click="isOn=true, isOpen=false">Edit</button>
     </div>
 <div class="settingContent" v-if="isOpen">
-    <img id="userImage" src="./bg.png" />
+    <img id="userImage" src="./hamzabg.jpg" />
     <div class="userSettingInfo">
         <h1>Username</h1>
          <p>{{ users[0]?.pseudo }}</p>
@@ -18,7 +18,7 @@
     </div>
 </div>
 <div v-if="isOn"  class="settingContent">
-    <img id="userImage" src="./bg.png" />
+    <img id="userImage" src="./hamzabg.jpg" />
     <div class="userSettingInfo">
         <h1>Username</h1>
          <input type="text" id="pseudo" v-model="newPseudo" :placeholder="users[0]?.pseudo" >
@@ -120,7 +120,7 @@ export default {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
-    height: 220px;
+    height: 200px;
     width: 100%;
     border: 2px solid blue;
     border-radius: 5px;

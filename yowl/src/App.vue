@@ -29,7 +29,7 @@
         <!-- MY postsFiltered IS {{postsFiltered}}<br> -->
 
   </nav>
-  <router-view :postsFiltered="postsFiltered"/>
+  <router-view :postsFiltered="postsFiltered" :searchContent="searchContent"/>
 </template>
 
 <script>
@@ -48,7 +48,9 @@ export default {
       posts: [],
       categories: [],
       communities: [],
-      postsFiltered: this.posts
+      postsFiltered: this.posts,
+      categoryId: 0,
+      searchContent: ''
     }
   },
   components: {
@@ -59,8 +61,9 @@ export default {
   },
   methods: {
     getPostBySearch (searchContent) {
-      if (this.filterResult.length === 0) {
-        console.log('I am in get post by search, searchContent is ', searchContent)
+      this.searchContent = searchContent
+      if (this.categoryId === 0) {
+        console.log('POST BY SEARCH 1', searchContent)
         axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
           .then((response) => {
             this.searchResult = [...response.data]
@@ -68,13 +71,18 @@ export default {
             console.log('my searchResult is', response.data)
           })
       } else {
-        this.getPostBySearchAndCategoryFilter(searchContent, this.filterResult[0])
+        console.log('POST BY SEARCH 2', searchContent, 'AND', this.categoryId)
+        axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent + '&category=' + this.categoryId)
+          .then((response) => {
+            this.postsFiltered = [...response.data]
+          })
       }
     },
     // /!\ situation when you enter searchContent and filterContent at the same time is missing !!!
     getPostByCategoryFilter (categoryId = null) {
       // if (this.searchResult == null) {
       if (categoryId === null) {
+        console.log('POST BY FILTER ALL')
         axios.get('https://yowlteam.herokuapp.com/api/posts')
           .then((response) => {
             this.posts = response.data
@@ -85,7 +93,7 @@ export default {
         console.log('I am in get post by filter categoryId is ', this.searchResult)
         axios.get('https://yowlteam.herokuapp.com/api/posts/filter?category=' + categoryId)
           .then((response) => {
-            this.filterResult = [...response.data]
+            this.categoryId = categoryId
             this.postsFiltered = [...response.data]
             console.log('my category name is', categoryId)
           })
