@@ -16,7 +16,7 @@
      {{ community.image }}
      <br/>
      <br/>
-     Created at : {{ community.created_at}}
+     Created at : {{ createdDate }}
      <br/>
      <br/>
   </div>
@@ -27,6 +27,11 @@ export default {
   props: ['community'],
   name: 'IndexView',
   components: {
+  },
+  data () {
+    return {
+      createdDate: this.community.created_at.substring(0, 10)
+    }
   }
 }
 </script>
