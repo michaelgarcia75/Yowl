@@ -5,7 +5,9 @@
     </router-link>
     <SearchBar @getPostBySearch="getPostBySearch" :SearchResult="SearchResult" :filterResult="filterResult"/>
     <CategoriesFilter :categories="categories" :SearchResult="SearchResult" :filterResult="filterResult" @getPostByCategoryFilter="getPostByCategoryFilter"/>
-    <router-link to="/admin">Admin</router-link> |
+    <router-link to="/admin">Admin</router-link>
+    <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+    <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
     <DropDownMenu menu-title="Menu">
       <section class="option">
         <span class="desc">Online status // OPTION</span>
@@ -16,8 +18,8 @@
       <section class="option">
           <CreateCommunityModal>CreateCommunityModal</CreateCommunityModal>
       </section>
-      <section class="option">
-        <button>Log Out</button>
+      <section v-if="isLoggedIn" class="option">
+        <button @click="logout" >Log Out</button>
       </section>
       <section class="option">
         <span class="desc">Dark mode // OPTION</span>
@@ -33,6 +35,7 @@ import SearchBar from '@/components/SharedComponents/SearchBar.vue'
 import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
 import DropDownMenu from '@/components/SharedComponents/DropDownMenu.vue'
 import CreateCommunityModal from '@/components/SharedComponents/CreateCommunityModal.vue'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -51,7 +54,11 @@ export default {
     DropDownMenu,
     CreateCommunityModal
   },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'getToken'])
+  },
   methods: {
+    ...mapMutations(['setUser', 'setToken']),
     getPostBySearch (searchContent) {
       if (this.filterResult == null) {
         console.log('I am in get post by search, searchContent is ', searchContent)
@@ -99,6 +106,36 @@ export default {
       //     }
       //   }
       // }
+    },
+    logout () {
+      const instance = axios.create({
+        baseURL: 'https://yowlteam.herokuapp.com/api'
+      })
+
+      instance.defaults.headers.common.Authorization = `Bearer ${this.getToken}`
+      instance.post('/auth/logout')
+        .then((response) => {
+          console.log(response)
+          this.setToken('')
+          this.setUser({})
+          sessionStorage.clear()
+          this.$router.push('/')
+        })
+        .catch((error) => console.log(error))
+      // const config = {
+      //   headers: {
+      //     Authorization: `Bearer ${this.getToken}`
+      //   }
+      // }
+      // axios.post('https://yowlteam.herokuapp.com/api/auth/logout', config)
+      //   .then((response) => {
+      //     console.log(response)
+      //     this.setToken('')
+      //     this.setUser({})
+      //     sessionStorage.clear()
+      //     this.$router.push('/')
+      //   })
+      //   .catch((error) => console.log(error))
     }
   },
   created () {
