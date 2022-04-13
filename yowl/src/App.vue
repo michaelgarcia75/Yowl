@@ -6,6 +6,8 @@
     <SearchBar @getPostBySearch="getPostBySearch"/>
     <CategoriesFilter :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
     <router-link to="/admin">Admin</router-link> |
+    <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+    <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
     <DropDownMenu menu-title="Menu">
       <section class="option">
         <span class="desc">Online status // OPTION</span>
@@ -16,8 +18,8 @@
       <section class="option">
           <CreateCommunityModal>CreateCommunityModal</CreateCommunityModal>
       </section>
-      <section class="option">
-        <button>Log Out</button>
+      <section v-if="isLoggedIn" class="option">
+        <button @click="logout" >Log Out</button>
       </section>
       <section class="option">
         <span class="desc">Dark mode // OPTION</span>
@@ -34,6 +36,7 @@ import SearchBar from '@/components/SharedComponents/SearchBar.vue'
 import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
 import DropDownMenu from '@/components/SharedComponents/DropDownMenu.vue'
 import CreateCommunityModal from '@/components/SharedComponents/CreateCommunityModal.vue'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -55,7 +58,11 @@ export default {
     DropDownMenu,
     CreateCommunityModal
   },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'getToken'])
+  },
   methods: {
+    ...mapMutations(['setUser', 'setToken']),
     getPostBySearch (searchContent) {
       console.log('A')
       this.searchContent = searchContent
@@ -115,6 +122,58 @@ export default {
             })
         }
       }
+    },
+    getPostBySearchAndCategoryFilter (searchContent, categoryId) {
+      axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
+      //   .then((response) => {
+      //     this.searchResult = [...response.data]
+      //   })
+      // console.log('I am in get pot by search AND filter', searchContent, categoryId)
+      // axios.get('https://yowlteam.herokuapp.com/api/posts/filter?' + searchContent)
+      //   .then((response) => {
+      //     this.searchResult = [...response.data]
+      //   })
+      // axios.get('https://yowlteam.herokuapp.com/api/posts/filter?' + categoryId)
+      //   .then((response) => {
+      //     this.filterResult = [...response.data]
+      //   })
+      // for (let i = 0; i < this.searchResult.length; i++) {
+      //   for (let j = 0; j < this.filterResult.length; j++) {
+      //     if (this.searchResult[i] === this.filterResult[j]) {
+      //       this.searchAndFilterResult.push(this.searchResult[i])
+      //     }
+      //   }
+      // }
+    },
+    logout () {
+      const instance = axios.create({
+        baseURL: 'https://yowlteam.herokuapp.com/api'
+      })
+
+      instance.defaults.headers.common.Authorization = `Bearer ${this.getToken}`
+      instance.post('/auth/logout')
+        .then((response) => {
+          console.log(response)
+          this.setToken('')
+          this.setUser({})
+          sessionStorage.clear()
+          this.$router.push('/')
+        })
+        .catch((error) => console.log(error))
+      // const config = {
+      //   headers: {
+      //     Authorization: `Bearer ${this.getToken}`
+      //   }
+      // }
+      // axios.post('https://yowlteam.herokuapp.com/api/auth/logout', config)
+      //   .then((response) => {
+      //     console.log(response)
+      //     this.setToken('')
+      //     this.setUser({})
+      //     sessionStorage.clear()
+      //     this.$router.push('/')
+      //   })
+      //   .catch((error) => console.log(error))
     }
     // getPostBySearchAndCategoryFilter (searchContent, categoryId) {
     //   axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
