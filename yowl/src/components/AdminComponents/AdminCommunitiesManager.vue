@@ -5,7 +5,8 @@
       <tr>
         <th>ID</th>
         <th>Community</th>
-        <th>Initiator</th>
+        <th>belongs to</th>
+        <th>Post amount</th>
         <th>Member amount</th>
         <th>actions</th>
       </tr>
@@ -16,6 +17,8 @@
         :key='user.id'
       > -->
         <AdminEachCommunity v-for='community in communities' :key='community.id' :community="community"
+        @deleteCommunity='deleteCommunity'
+        @passCommunity='passCommunity'
         ></AdminEachCommunity>
       <!-- </div> -->
     </tbody>
@@ -37,6 +40,24 @@ export default {
     AdminNavButtons
   },
   methods: {
+    deleteCommunity (communityId) {
+      axios.delete('https://yowlteam.herokuapp.com/api/communities/' + communityId)
+        .then((response) => {
+          this.communities = [...this.communities.filter((element) => element.id !== communityId)]
+        })
+    },
+    passCommunity (communityId) {
+      // console.log('in delete post function ', postId)
+      axios.put('https://yowlteam.herokuapp.com/api/communities/' + communityId,
+        {
+          is_reported: 0
+        })
+        .then((response) => {
+          this.communities = [...this.communities.filter((element) => element.id !== communityId)]
+          // console.log('AFTERRRRRR posts is', this.posts)
+        })
+        .catch(error => console.log(error))
+    }
   },
   created () {
     axios.get('https://yowlteam.herokuapp.com/api/communities')

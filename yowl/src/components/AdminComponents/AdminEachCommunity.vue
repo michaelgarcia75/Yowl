@@ -2,11 +2,12 @@
   <tr>
     <td>{{communityId}}</td>
     <td>{{communityName}}</td>
-    <td>{{communityUserId}}</td>
+    <td>{{communityCategoryId}}</td>
     <td>{{postsOfOneCommunity.length}} </td>
+    <td>{{usersOfOneCommunity.length}} </td>
     <td>
-        <button class='button'>Delete</button>
-        <button class='button'>Pass</button>
+        <button class='button' @click="$emit('deleteCommunity', communityId)">Delete</button>
+        <button class='button' @click="$emit('passCommunity', communityId)">Pass</button>
     </td>
   </tr>
 </template>
@@ -20,8 +21,10 @@ export default {
     return {
       communityId: this.community.id,
       communityName: this.community.name,
-      communityUserId: this.community.user_id,
-      postsOfOneCommunity: []
+      communityCategoryId: this.community.category_id,
+      communities: [],
+      postsOfOneCommunity: [],
+      usersOfOneCommunity: []
     }
   },
   // components: {
@@ -31,13 +34,33 @@ export default {
     getUsersByCommunity (communityId) {
       axios.get('https://yowlteam.herokuapp.com/api/users/community/' + communityId)
         .then((response) => {
+          this.usersOfOneCommunity = response.data
+        })
+        .catch(error => console.log(error))
+    },
+    getPostsByCommunity (communityId) {
+      axios.get('https://yowlteam.herokuapp.com/api/posts/community/' + communityId)
+        .then((response) => {
           this.postsOfOneCommunity = response.data
+        })
+        .catch(error => console.log(error))
+    },
+    getCategoryName (categoryId) {
+      // console.log('this user id is ', userId)
+      axios.get('https://yowlteam.herokuapp.com/api/categories')
+        .then((response) => {
+          this.categories = response.data
+          const category = this.categories.filter((category) => category.id === categoryId)
+          const categoryName = category[0].name
+          this.communityCategoryId = categoryName
         })
         .catch(error => console.log(error))
     }
   },
   created () {
     this.getUsersByCommunity(this.communityId)
+    this.getPostsByCommunity(this.communityId)
+    this.getCategoryName(this.communityCategoryId)
   }
 }
 </script>
