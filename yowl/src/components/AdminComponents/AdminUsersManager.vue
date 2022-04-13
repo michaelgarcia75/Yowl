@@ -15,7 +15,7 @@
         <AdminEachUser
         v-for='user in users' :key='user.id' :user="user"
         @updateUser='updateUser'
-        :userName='userName' :userEmail='userEmail' :userRole='userRole'
+        :userNewName="useNewName" :userNewEmail="userNewEmail" :userNewRole="userNewRole"
         @deleteUser='deleteUser'
         ></AdminEachUser>
         <!-- <td>{{user.id}}</td>
@@ -51,32 +51,34 @@ export default {
       } else {
         userRole = 0
       }
-      console.log('changed user role is ', userRole)
+      // console.log('changed user role is ', userRole)
       axios.put('https://yowlteam.herokuapp.com/api/users/' + userId,
         {
           pseudo: userName,
           email: userEmail,
           is_admin: userRole
         })
+      this.userNewName = userName
+      this.userNewEmail = userEmail
+      this.userNewRole = userRole
+      // console.log('in function userName is ', this.userNewName, 'userEmail is ', this.userNewEmail, 'userRole is ', this.userNewRole)
     },
     deleteUser (userId) {
       axios.delete('https://yowlteam.herokuapp.com/api/users/' + userId)
+        .then((response) => {
+          // console.log('in side response')
+          // console.log('response is ', response)
+          this.users = [...this.users.filter((element) => element.id !== userId)]
+        })
     }
   },
   created () {
     axios.get('https://yowlteam.herokuapp.com/api/users')
       .then((response) => {
-        console.log('users is', response.data)
+        // console.log('users is', response.data)
         this.users = response.data
       })
       .catch(error => console.log(error))
-    // axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
-    //   .then((response) => {
-    //     // console.log('posts is', response.data)
-    //     this.postsOfOneUser = response.data
-    //     // this.postsOfOneUser = [...this.posts.filter((element) => element.user_id !== this.user.id)]
-    //   })
-    //   .catch(error => console.log(error))
   }
 }
 </script>
