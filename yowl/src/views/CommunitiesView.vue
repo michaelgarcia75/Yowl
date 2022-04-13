@@ -1,15 +1,7 @@
 <template>
-<p><b><u>Communities</u></b></p>
+<p><b><u>Communities §§§§§§</u></b></p>
   <div class="communities">
     <CommunitiesManager
-    v-for="community in communities"
-      :key="community.id"
-      :community_id="community.id"
-      :category_id="category.id"
-      :name="community.name"
-      :title="community.title"
-      :content="community.content"
-      :picture="community.picture"
     />
     <CategoriesFilter></CategoriesFilter>
   </div>

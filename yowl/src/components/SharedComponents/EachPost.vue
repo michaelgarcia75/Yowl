@@ -1,5 +1,6 @@
 <template>
   <div class="eachPost">
+    <p>{{community.name}} Posted by USERNAME {{moment(date).fromNow()}}</p>
     <h1>{{ post.title }}</h1>
     <br />
     {{ post.content }}
@@ -10,7 +11,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import moment from 'moment'
+import axios from 'axios'
 import VoteButtons from '@/components/SharedComponents/VoteButtons.vue'
 
 export default {
@@ -18,6 +20,20 @@ export default {
   name: 'IndexView',
   components: {
     VoteButtons
+  },
+  data () {
+    return {
+      community: [],
+      date: this.post.created_at
+    }
+  },
+  created () {
+    this.moment = moment
+    axios.get('https://yowlteam.herokuapp.com/api/communities/' + this.post.community_id)
+      .then((response) => {
+        this.community = response.data
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>
