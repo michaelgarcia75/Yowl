@@ -2,8 +2,8 @@
   <div class="userSetting">
     <div class="settingTitle">
       <h1>Account Settings</h1>
-      <button class="editButton" v-if="isOpen" @click="isOn=true, isOpen=false">Edit</button>
-      <button class="returnButton" v-if="isOn" @click="isOn=false, isOpen=true">Return</button>
+      <button class="editButton" v-if="isOpen" @click="isOpen=false">Edit</button>
+      <button class="returnButton" v-if="isOn" @click="isOpen=true">Return</button>
     </div>
     <p v-if="errors.length">
     <b>Please correct the following error(s):</b>
@@ -24,7 +24,7 @@
         <p>********</p> -->
       </div>
     </div>
-    <div v-if="isOn"  class="settingContent">
+    <div v-if="!isOpen"  class="settingContent">
       <img id="userImage" src="./hamzabg.jpg" />
       <div class="userSettingInfo">
         <h1>Username</h1>
@@ -49,7 +49,6 @@ const character = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(
 export default {
   data () {
     return {
-      isOn: false,
       isOpen: true,
       errors: [],
       user: {},
@@ -95,6 +94,7 @@ export default {
         this.user.email = newEmail
         this.isOn = false
         this.isOpen = true
+        this.setUser(this.user)
       }
     }
   },
