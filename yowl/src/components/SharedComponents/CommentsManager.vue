@@ -8,14 +8,14 @@
 <textarea v-if="!isAdd" v-model="newComment" class="addComment">
   </textarea>
   <div class="commentManager" v-if="!isOpen">
-    <EachComment  v-for="comment in commentsFiltered" :key="comment.id" :comment="comment" />
+    <EachComment  v-for="comment in commentsFiltered" :key="comment.id" :user="user" :comment="comment" />
   </div>
 </template>
 
 <script>
 import EachComment from '@/components/SharedComponents/EachComment.vue'
 import axios from 'axios'
-import { mapGetters } from 'vuex'
+// import { mapGetters } from 'vuex'
 
 export default {
   props: ['commentsFiltered', 'postId'],
@@ -25,14 +25,14 @@ export default {
   },
   data () {
     return {
-      user: {},
+      // user: {},
       isOpen: true,
       isAdd: true
     }
   },
-  computed: {
-    ...mapGetters(['getUser'])
-  },
+  // computed: {
+  //   ...mapGetters(['getUser'])
+  // },
   methods: {
     createComment (newComment) {
       console.log('description is ', newComment)
@@ -52,7 +52,7 @@ export default {
     }
   },
   created () {
-    this.user = this.getUser
+    // this.user = this.getUser
   }
 }
 </script>
