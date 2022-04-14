@@ -8,7 +8,7 @@
 import EachPost from '@/components/SharedComponents/EachPost.vue'
 
 export default {
-  props: ['postsFiltered'],
+  props: ['postsFiltered', 'user'],
   name: 'IndexView',
   components: {
     EachPost

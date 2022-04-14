@@ -1,13 +1,13 @@
 <template>
   <div class="eachPost">
-    <p>{{community.name}} Posted by USERNAME {{moment(date).fromNow()}}</p>
+    <p>{{community.name}} Posted by {{postUser.pseudo}} {{moment(date).fromNow()}}</p>
     <h1>{{ post.title }}</h1>
     <br />
     {{ post.content }}
     <br />
     <br />
     <VoteButtons :post="post" />
-    <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId"/>
+    <CommentsManager :user="user" :commentsFiltered="commentsFiltered" :postId="postId"/>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import VoteButtons from '@/components/SharedComponents/VoteButtons.vue'
 import CommentsManager from '@/components/SharedComponents/CommentsManager.vue'
 
 export default {
-  props: ['post'],
+  props: ['post', 'user'],
   name: 'IndexView',
   components: {
     VoteButtons,
@@ -29,11 +29,17 @@ export default {
       commentsFiltered: [],
       community: [],
       date: this.post.created_at,
-      postId: this.post.id
+      postId: this.post.id,
+      postUser: []
     }
   },
   created () {
     this.moment = moment
+    axios.get('https://yowlteam.herokuapp.com/api/users/' + this.post.user_id)
+      .then((response) => {
+        this.postUser = response.data
+      })
+      .catch(error => console.log(error))
     axios.get('https://yowlteam.herokuapp.com/api/comments/post/' + this.post.id)
       .then((response) => {
         // console.log('comments is', response.data)
