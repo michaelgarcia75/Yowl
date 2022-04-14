@@ -6,7 +6,7 @@
           <p>COMMENTS</p>
           <p>UPVOTES</p>
         </div>
-         <PostManager :postsFiltered="postsFiltered"/>
+         <PostManager :postsFiltered="postsFiltered" @deletePost="deletePost"/>
                  <!--<UpVotedPostsManager/> -->
 
     </div>
@@ -36,6 +36,20 @@ export default {
   },
   computed: {
     ...mapGetters(['isLoggedIn', 'getUser'])
+  },
+  methods: {
+    deletePost (postId) {
+      axios.delete('https://yowlteam.herokuapp.com/api/posts/' + postId)
+        .then((response) => {
+          axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
+            .then((response) => {
+            // console.log('posts is', response.data)
+              this.postsFiltered = response.data
+            // console.log('post filtered is', this.postsFiltered)
+            })
+            .catch(error => console.log(error))
+        })
+    }
   },
   created () {
     this.user = this.getUser

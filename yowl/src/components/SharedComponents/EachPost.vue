@@ -8,6 +8,7 @@
     <br />
     <VoteButtons :post="post" />
     <button class="hover" @click="() => TogglePopUp('buttonTrigger')" v-if="userID === this.post.user_id">Edit Post</button>
+    <button class="hover" @click="this.$parent.$emit('deletePost', postId)">Delete Post</button>
     <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId"/>
     <EditPost
       v-if="popupTrigger.buttonTrigger"
