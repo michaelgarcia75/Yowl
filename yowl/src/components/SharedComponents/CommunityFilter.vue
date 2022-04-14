@@ -1,25 +1,46 @@
 <template>
   <div>
-    <DropDownMenu menu-title="Filter by community">
-      <div v-for="category in categories" :key="category.id">
+    <DropDownMenu :menuTitle="menuTitle">
+      <div v-for="community in userCommunities" :key="community.id">
         <section class="option">
-          <button @click="$emit('getPostByCommunityFilter', community.id)">{{ category.name }}</button>
+          <span @click="selectCommunity(community.name)">{{ community.name }}</span>
         </section>
       </div>
     </DropDownMenu>
+
   </div>
 </template>
 <script>
+import axios from 'axios'
 import DropDownMenu from '@/components/SharedComponents/DropDownMenu.vue'
+// IMPORT STATE MAPGETTERS
 
 export default {
   components: {
     DropDownMenu
   },
-  props: ['categories'],
+  props: [],
   data () {
     return {
+      menuTitle: 'Filter by community',
+      userCommunities: [],
+      userId: 11
     }
+  },
+  //   COMPUTED CF APP.VUE
+  methods: {
+    selectCommunity (communityName) {
+      this.menuTitle = communityName
+    }
+  },
+  created () {
+    // this.user = getUser()
+    axios.get('https://yowlteam.herokuapp.com/api/communities/user/' + this.userId)
+      .then((response) => {
+        console.log('communities is', response.data)
+        this.userCommunities = response.data
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>
