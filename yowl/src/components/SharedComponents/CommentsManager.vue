@@ -8,7 +8,7 @@
 <textarea v-if="!isAdd" v-model="newComment" class="addComment">
   </textarea>
   <div class="commentManager" v-if="!isOpen">
-    <EachComment  v-for="comment in commentsFiltered" :key="comment.id" :comment="comment" />
+    <EachComment  v-for="comment in commentsFiltered" :key="comment.id" :comment="comment"/>
   </div>
 </template>
 
@@ -35,9 +35,6 @@ export default {
   },
   methods: {
     createComment (newComment) {
-      console.log('description is ', newComment)
-      console.log(this.user.id)
-      console.log(this.postId)
       if (newComment !== '') {
         axios.post('https://yowlteam.herokuapp.com/api/comments',
           {
