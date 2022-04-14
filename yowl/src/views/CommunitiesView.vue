@@ -45,7 +45,7 @@
           @change="onFilePicked"
         />
         <br />
-        <CategoriesFilter :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
+        <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
         <br />
         <button class="create" @click="createCommunity(communityTitle, communityDescription, categoryId)" type="submit">
           Create
@@ -80,7 +80,8 @@ export default {
       communityDescription: '',
       categories: [],
       imagePath: this.image,
-      categoryId: ''
+      categoryId: '',
+      filterAll: false
     }
   },
   methods: {

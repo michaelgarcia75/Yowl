@@ -4,7 +4,7 @@
       <img alt="Vue logo" src="./assets/logo.png">
     </router-link>
     <SearchBar @getPostBySearch="getPostBySearch"/>
-    <CategoriesFilter :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
+    <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
     <router-link to="/admin">Admin</router-link> |
     <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
     <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
@@ -49,7 +49,8 @@ export default {
       communities: [],
       postsFiltered: this.posts,
       categoryId: 0,
-      searchContent: ''
+      searchContent: '',
+      filterAll: true
     }
   },
   components: {
@@ -119,6 +120,7 @@ export default {
           axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + this.searchContent + '&category=' + categoryId)
             .then((response) => {
               this.postsFiltered = [...response.data]
+              console.log(response.data)
             })
         }
       }

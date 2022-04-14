@@ -1,7 +1,7 @@
 <template>
   <div>
     <DropDownMenu menu-title="Filter by category">
-      <section class="option">
+      <section v-if="filterAll === true" class="option">
         <button @click="$emit('getPostByCategoryFilter', null)">All categories</button>
       </section>
       <div v-for="category in categories" :key="category.id">
@@ -19,7 +19,7 @@ export default {
   components: {
     DropDownMenu
   },
-  props: ['categories'],
+  props: ['categories', 'filterAll'],
   data () {
     return {
     }

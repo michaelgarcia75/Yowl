@@ -5,7 +5,6 @@
     <PostManager :postsFiltered="postsFiltered"/>
     <TopCommunities/>
         <router-link to="/communities">Communities</router-link>
-
   </div>
 </template>
 
