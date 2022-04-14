@@ -14,7 +14,7 @@
         <router-link to="/dashboard">Profil</router-link>
       </section>
       <section class="option">
-          <CreateCommunityModal>CreateCommunityModal</CreateCommunityModal>
+      <CommunityButton/>
       </section>
       <section class="option">
         <button>Log Out</button>
@@ -23,7 +23,6 @@
         <span class="desc">Dark mode // OPTION</span>
       </section>
     </DropDownMenu>
-
   </nav>
   <router-view :postsFiltered="postsFiltered" :searchContent="searchContent"/>
 </template>
@@ -33,7 +32,7 @@ import axios from 'axios'
 import SearchBar from '@/components/SharedComponents/SearchBar.vue'
 import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
 import DropDownMenu from '@/components/SharedComponents/DropDownMenu.vue'
-import CreateCommunityModal from '@/components/SharedComponents/CreateCommunityModal.vue'
+import CommunityButton from '@/components/SharedComponents/CommunityButton.vue'
 
 export default {
   data () {
@@ -53,7 +52,7 @@ export default {
     SearchBar,
     CategoriesFilter,
     DropDownMenu,
-    CreateCommunityModal
+    CommunityButton
   },
   methods: {
     getPostBySearch (searchContent) {

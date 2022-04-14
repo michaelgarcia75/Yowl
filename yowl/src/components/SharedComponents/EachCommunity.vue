@@ -13,7 +13,7 @@
     {{ community.description }}
     <br/>
     <br/>
-     {{ community.image }}
+   {{ community.image}}
      <br/>
      <br/>
      Created at : {{ community.created_at}}
@@ -22,7 +22,6 @@
   </div>
 </template>
 <script>
-
 export default {
   props: ['community'],
   name: 'IndexView',

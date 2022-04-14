@@ -38,15 +38,14 @@ export default {
       }
       window.addEventListener('click', closeListerner)
       this.isOpen = !this.isOpen
-    },
-    catchOutsideClick (event, dropdown) {
-      if (dropdown === event.target) {
-        return false
-      }
-      if (this.isOpen && dropdown !== event.target) {
-        return true
-      }
     }
+    // catchOutsideClick (event, dropdown) {
+    //   if (dropdown === event.target) {
+    //     return false
+    //   }
+    //   if (this.isOpen && dropdown !== event.target) {
+    //     return true
+    //   }
   }
 }
 
