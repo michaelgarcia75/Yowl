@@ -9,7 +9,7 @@
 import EachPost from '@/components/SharedComponents/EachPost.vue'
 import { mapGetters } from 'vuex'
 export default {
-  props: ['postsFiltered'],
+  props: ['postsFiltered', 'user'],
   name: 'IndexView',
   components: {
     EachPost

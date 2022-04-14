@@ -10,16 +10,16 @@
     <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
     <DropDownMenu menu-title="Menu">
       <section class="option">
-        <span class="desc">Online status // OPTION</span>
+        <span v-if="isLoggedIn" class="desc">Logged as {{user.pseudo}} </span>
       </section>
-      <section class="option">
+      <section v-if="isLoggedIn" class="option">
         <router-link to="/dashboard">Profil</router-link>
       </section>
-      <section class="option">
+      <section v-if="isLoggedIn" class="option">
           <CreateCommunityModal>CreateCommunityModal</CreateCommunityModal>
       </section>
       <section v-if="isLoggedIn" class="option">
-        <button @click="logout" >Log Out</button>
+        <a @click="logout" >Log Out</a>
       </section>
       <section class="option">
         <span class="desc">Dark mode // OPTION</span>
@@ -50,7 +50,8 @@ export default {
       postsFiltered: this.posts,
       categoryId: 0,
       searchContent: '',
-      filterAll: true
+      filterAll: true,
+      user: {}
     }
   },
   components: {
@@ -60,7 +61,7 @@ export default {
     CreateCommunityModal
   },
   computed: {
-    ...mapGetters(['isLoggedIn', 'getToken'])
+    ...mapGetters(['isLoggedIn', 'getToken', 'getUser'])
   },
   methods: {
     ...mapMutations(['setUser', 'setToken']),
@@ -158,7 +159,7 @@ export default {
           console.log(response)
           this.setToken('')
           this.setUser({})
-          sessionStorage.clear()
+          localStorage.clear()
           this.$router.push('/')
         })
         .catch((error) => console.log(error))
@@ -202,6 +203,7 @@ export default {
   },
   created () {
     this.getPostBySearch()
+    this.user = this.getUser
     axios.get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
         this.posts = response.data
@@ -242,6 +244,8 @@ nav {
 nav a {
   font-weight: bold;
   color: #2c3e50;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 nav a.router-link-exact-active {

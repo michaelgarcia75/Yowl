@@ -1,6 +1,6 @@
 <template>
   <div class="eachComment">
-    <h1>{{ comment.user_id }}</h1>
+    <p>Posted by {{ commentUser.pseudo }} {{moment(date).fromNow()}}</p>
     <br />
     {{ comment.content }}
     <br />
@@ -8,12 +8,25 @@
 </template>
 
 <script>
-// @ is an alias to /src
+import axios from 'axios'
+import moment from 'moment'
 
 export default {
   props: ['comment'],
   name: 'IndexView',
-  components: {
+  data () {
+    return {
+      commentUser: []
+    }
+  },
+  created () {
+    this.moment = moment
+    axios.get('https://yowlteam.herokuapp.com/api/users/' + this.comment.user_id)
+      .then((response) => {
+        this.commentUser = response.data
+        console.log('comment user id', response.data)
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>

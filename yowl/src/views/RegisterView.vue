@@ -3,17 +3,20 @@
     <h1>REGISTER</h1>
     <form @submit.prevent="register">
       <input v-model="pseudo" placeholder="Pseudo" />
-      <br />
-      <br />
+      <br>
+      <br>
       <input v-model="email" placeholder="Email" />
-      <br />
-      <br />
+      <br>
+      <br>
+      <input v-model="birth_date" placeholder="Birth Date : YYYY-MM-DD" />
+      <br>
+      <br>
       <input v-model="password" placeholder="Password" type="password" />
-      <br />
-      <br />
+      <br>
+      <br>
       <input v-model="password_confirmation" placeholder="Confirm Password" type="password" />
-      <br />
-      <br />
+      <br>
+      <br>
       <button type="submit">Register</button>
     </form>
   </div>
@@ -21,6 +24,7 @@
 
 <script>
 import axios from 'axios'
+// const regexDate = /^\d{4}-\d{2}-\d{2}$/
 
 export default {
   name: 'RegisterView',
@@ -28,8 +32,11 @@ export default {
     return {
       pseudo: '',
       email: '',
+      birth_date: '',
       password: '',
-      user: {}
+      password_confirmation: '',
+      user: {},
+      errors: []
     }
   },
   methods: {
@@ -37,6 +44,7 @@ export default {
       axios.post('https://yowlteam.herokuapp.com/api/auth/register', {
         pseudo: this.pseudo,
         email: this.email,
+        birth_date: this.birth_date,
         password: this.password,
         password_confirmation: this.password_confirmation
       }
