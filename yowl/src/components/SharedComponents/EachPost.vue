@@ -1,18 +1,12 @@
 <template>
   <div class="eachPost">
-<<<<<<< HEAD
     <p>{{community.name}} Posted by {{userNAME}} {{moment(date).fromNow()}}</p>
     <h1>{{ postNewTitle }}</h1>
-=======
-    <p>{{community.name}} Posted by {{postUser.pseudo}} {{moment(date).fromNow()}}</p>
-    <h1>{{ post.title }}</h1>
->>>>>>> d031398643446f486d913a72d4c786d5efcbf3b2
     <br />
     {{ postNewContent }}
     <br />
     <br />
     <VoteButtons :post="post" />
-<<<<<<< HEAD
     <button class="hover" @click="() => TogglePopUp('buttonTrigger')" v-if="userID === this.post.user_id">Edit Post</button>
     <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId"/>
     <EditPost
@@ -23,9 +17,6 @@
       :postNewTitle="postNewTitle" :postNewContent="postNewContent"
     >
     </EditPost>
-=======
-    <CommentsManager :user="user" :commentsFiltered="commentsFiltered" :postId="postId"/>
->>>>>>> d031398643446f486d913a72d4c786d5efcbf3b2
   </div>
 </template>
 
@@ -38,11 +29,7 @@ import { ref } from 'vue'
 import EditPost from '@/components/SharedComponents/EditPost.vue'
 
 export default {
-<<<<<<< HEAD
   props: ['post', 'userId', 'userName'],
-=======
-  props: ['post', 'user'],
->>>>>>> d031398643446f486d913a72d4c786d5efcbf3b2
   name: 'IndexView',
   components: {
     VoteButtons,
@@ -68,7 +55,6 @@ export default {
       community: [],
       date: this.post.created_at,
       postId: this.post.id,
-<<<<<<< HEAD
       postNewTitle: this.post.title,
       postNewContent: this.post.content,
       userID: this.userId,
@@ -88,9 +74,6 @@ export default {
           this.postNewTitle = postTitle
           this.postNewContent = postContent
         })
-=======
-      postUser: []
->>>>>>> d031398643446f486d913a72d4c786d5efcbf3b2
     }
   },
   created () {
