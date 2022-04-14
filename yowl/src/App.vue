@@ -15,8 +15,8 @@
       <section v-if="isLoggedIn" class="option">
         <router-link to="/dashboard">Profil</router-link>
       </section>
-      <section v-if="isLoggedIn" class="option">
-          <CreateCommunityModal>CreateCommunityModal</CreateCommunityModal>
+      <section class="option">
+      <CommunityButton/>
       </section>
       <section v-if="isLoggedIn" class="option">
         <a @click="logout" >Log Out</a>
@@ -25,7 +25,6 @@
         <span class="desc">Dark mode // OPTION</span>
       </section>
     </DropDownMenu>
-
   </nav>
   <router-view :postsFiltered="postsFiltered" :searchContent="searchContent"/>
 </template>
@@ -35,7 +34,7 @@ import axios from 'axios'
 import SearchBar from '@/components/SharedComponents/SearchBar.vue'
 import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
 import DropDownMenu from '@/components/SharedComponents/DropDownMenu.vue'
-import CreateCommunityModal from '@/components/SharedComponents/CreateCommunityModal.vue'
+import CommunityButton from '@/components/SharedComponents/CommunityButton.vue'
 import { mapGetters, mapMutations } from 'vuex'
 
 export default {
@@ -58,7 +57,7 @@ export default {
     SearchBar,
     CategoriesFilter,
     DropDownMenu,
-    CreateCommunityModal
+    CommunityButton
   },
   computed: {
     ...mapGetters(['isLoggedIn', 'getToken', 'getUser'])

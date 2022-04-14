@@ -1,14 +1,7 @@
 <template>
-  <p>
-    <b><u>Communities</u></b>
-  </p>
   <button @click="isOpen = true" class="tc-note-open">
     Create a Community
   </button>
-  <div class="communities">
-    <CommunitiesManager
-    />
-  </div>
   <!-- <button @click="isOpen = true" class="tc-note-open">
     Create a Community
   </button> -->
@@ -45,7 +38,7 @@
           @change="onFilePicked"
         />
         <br />
-        <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
+        <CategoriesFilter :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
         <br />
         <button class="create" @click="createCommunity(communityTitle, communityDescription, categoryId)" type="submit">
           Create
@@ -57,7 +50,6 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import CommunitiesManager from '@/components/SharedComponents/CommunitiesManager.vue'
 import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
 import axios from 'axios'
 const isOpen = ref(false)
@@ -66,7 +58,6 @@ const isOpen = ref(false)
 export default {
   name: 'AdminView',
   components: {
-    CommunitiesManager,
     CategoriesFilter
   },
   props: [],
@@ -77,9 +68,11 @@ export default {
       communityDescription: '',
       categories: [],
       imagePath: this.image,
-      categoryId: '',
-      filterAll: false
+      categoryId: ''
     }
+  },
+  unmounted () {
+    console.log('DESTROY')
   },
   methods: {
     onPickFile () {
