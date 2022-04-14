@@ -1,8 +1,5 @@
 <template>
-  <p>
-    <b><u>Communities</u></b>
-  </p>
-  <div @click="isOpen = true" class="divModal">
+  <div v-if="user" @click="isOpen = true" class="divModal">
     <input class="divModalBar" :readonly="readonly" placeholder="New post ..."/>
     <img class="image" width="30" min-width="10"
     src="../../assets/img.png"
@@ -48,9 +45,9 @@
           @change="onFilePicked"
         />
         <br />
-        <CommunityFilter :community="community" @getPostByCategoryFilter="getPostByCategoryFilter" v-model="categoryId"/>
+        <CommunityFilter :community="community" @getPostBycommunityFilter="getPostBycommunityFilter"/>
         <br />
-        <button class="create" @click="createPost(postTitle, postContent, categoryId)" type="submit">
+        <button class="create" @click="createPost(postTitle, postContent, communityId)" type="submit">
           Create
         </button>
       </div>
@@ -67,18 +64,18 @@ const isOpen = ref(false)
 </script>
 <script>
 export default {
-  name: 'AdminView',
   components: {
     CommunityFilter
   },
 
-  props: [],
+  props: ['user'],
   data () {
     return {
       image: null,
       postTitle: '',
       postContent: '',
-      imagePath: this.image
+      imagePath: this.image,
+      posts: []
     }
   },
   methods: {
@@ -95,9 +92,10 @@ export default {
       fileReader.readAsDataURL(files[0])
       this.imageUrl = files[0]
     },
-    createPost (title, content) {
+    createPost (title, content, communityId) {
       console.log('title is ', title)
       console.log('description is ', content)
+      console.log('communityId is ', communityId)
       console.log('image path is ', this.imageUrl.name)
       if (this.postTitle !== '') {
         const picture = this.imageUrl.name
@@ -106,16 +104,19 @@ export default {
             title: title,
             content: content,
             media: picture,
-            category_id: this.categoryId
-          }).then((data) => {
-          console.log(data)
-          window.location.reload()
+            user_id: this.user.id,
+            community_id: this.communityId
+          }).then((response) => {
+          axios.get('https://yowlteam.herokuapp.com/api/posts')
+            .then((response) => {
+              this.posts = response.data
+            })
         })
         this.postTitle = title
       }
     },
-    getPostByCategoryFilter (categoryId) {
-      this.categoryId = categoryId
+    getPostBycommunityFilter (communityId) {
+      this.communityId = communityId
     }
   },
   created () {

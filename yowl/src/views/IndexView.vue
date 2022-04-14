@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <p v-if="searchContent"> Research : {{searchContent}}</p>
-    <CreatePostButton @save="save" @filesChange="filesChange"/>
+    <CreatePostButton @save="save" @filesChange="filesChange" :user="user"/>
     <PostManager :user="user" :postsFiltered="postsFiltered"/>
     <TopCommunities/>
         <router-link to="/communities">Communities</router-link>
@@ -38,7 +38,6 @@ export default {
   },
   created () {
     this.user = this.getUser
-    console.log(this.user)
     axios
       .get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {

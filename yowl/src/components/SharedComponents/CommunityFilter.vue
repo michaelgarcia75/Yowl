@@ -3,7 +3,7 @@
     <DropDownMenu :menuTitle="menuTitle">
       <div v-for="community in userCommunities" :key="community.id">
         <section class="option">
-          <span @click="selectCommunity(community.name)">{{ community.name }}</span>
+          <span @click="selectCommunity(community.name, community.id), $emit('getPostBycommunityFilter', communityId)">{{ community.name }}</span>
         </section>
       </div>
     </DropDownMenu>
@@ -24,13 +24,15 @@ export default {
     return {
       menuTitle: 'Filter by community',
       userCommunities: [],
-      userId: 11
+      userId: 11,
+      communityId: 0
     }
   },
   //   COMPUTED CF APP.VUE
   methods: {
-    selectCommunity (communityName) {
+    selectCommunity (communityName, communityId) {
       this.menuTitle = communityName
+      this.communityId = communityId
     }
   },
   created () {
