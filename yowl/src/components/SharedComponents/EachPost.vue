@@ -7,7 +7,7 @@
     <br />
     <br />
     <VoteButtons :post="post" />
-    <CommentsManager :commentsFiltered="commentsFiltered"/>
+    <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId"/>
   </div>
 </template>
 
@@ -28,7 +28,8 @@ export default {
     return {
       commentsFiltered: [],
       community: [],
-      date: this.post.created_at
+      date: this.post.created_at,
+      postId: this.post.id
     }
   },
   created () {

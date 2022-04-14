@@ -3,7 +3,7 @@
     <div class="settingTitle">
       <h1>Account Settings</h1>
       <button class="editButton" v-if="isOpen" @click="isOpen=false">Edit</button>
-      <button class="returnButton" v-if="isOn" @click="isOpen=true">Return</button>
+      <button class="returnButton" v-if="!isOpen" @click="isOpen=true">Return</button>
     </div>
     <p v-if="errors.length">
     <b>Please correct the following error(s):</b>
@@ -28,15 +28,17 @@
       <img id="userImage" src="./hamzabg.jpg" />
       <div class="userSettingInfo">
         <h1>Username</h1>
-        <input type="text" id="pseudo" v-model="newPseudo" placeholder="Michael le gros tocard" >
+        <input type="text" id="pseudo" v-model="newPseudo" placeholder="MichaelTocard75" >
         <h1>Email Adress</h1>
         <input type="email" id="email" v-model="newEmail" placeholder="michael@toc.ard">
+        <h1>Birth Date</h1>
+        <input type="text" id="birth_date" v-model="newBirthDate" placeholder="YYYY-MM-DD">
         <h1>Password</h1>
         <input type="password" id="password" v-model="newPassword">
         <h1>Confirmation</h1>
         <input type="password" id="confirmation" v-model="confirmation">
         <br>
-        <button class="submitButton" @click="editUser(user.id, newPseudo, newEmail, newPassword, confirmation)">Submit</button>
+        <button class="submitButton" @click="editUser(user.id, newPseudo, newEmail, newPassword, newBirthDate, confirmation)">Submit</button>
       </div>
     </div>
   </div>
@@ -45,41 +47,39 @@
 <script>
 import axios from 'axios'
 import { mapGetters, mapMutations } from 'vuex'
-const character = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+const regexDate = /^\d{4}-\d{2}-\d{2}$/
 export default {
   data () {
     return {
       isOpen: true,
       errors: [],
       user: {},
-      pseudo: '',
-      email: '',
       newPseudo: '',
       newEmail: '',
+      newBirthDate: '',
       newPassword: '',
       confirmation: ''
     }
   },
   computed: {
-    ...mapGetters(['isLoggedIn', 'getToken', 'getUser'])
+    ...mapGetters(['isLoggedIn', 'getUser'])
   },
   methods: {
-    ...mapMutations(['setUser', 'setToken']),
-    editUser (userId, newPseudo, newEmail, newPassword, confirmation) {
-      if (newPseudo === undefined && newPassword === undefined) {
-        this.errors.push('Fields Empty')
-      }
+    ...mapMutations(['setUser']),
+    editUser (userId, newPseudo, newEmail, newPassword, newBirthDate, confirmation) {
+      this.errors = []
       if (newPseudo === undefined || newPseudo.length === 0) {
         this.errors.push('Username Field Empty')
       }
       if (newPassword === undefined || newPassword.length === 0) {
         this.errors.push('Password Field Empty')
       }
-      if (newPseudo.length < 2 && newPseudo.length > 0) {
-        this.errors.push('Username Minimum 8 characters')
-      }
-      if (!character.test(newEmail)) {
+      if (!regexEmail.test(newEmail)) {
         this.errors.push('Please enter a valid email address')
+      }
+      if (!regexDate.test(this.newBirthDate)) {
+        this.errors.push('Please enter a valid birth date')
       }
       if (newPassword !== confirmation) {
         this.errors.push('Password and Confirmation are not identical')
@@ -88,31 +88,27 @@ export default {
         axios.put('https://yowlteam.herokuapp.com/api/users/' + userId, {
           pseudo: newPseudo,
           email: newEmail,
-          password: newPassword
+          password: newPassword,
+          birth_date: newBirthDate
         })
+          .then((data) => {
+            console.log(data)
+            console.log('User updated')
+          })
+          .catch((err) => console.log(err))
         this.user.pseudo = newPseudo
         this.user.email = newEmail
-        this.isOn = false
+        this.user.birth_date = newBirthDate
         this.isOpen = true
         this.setUser(this.user)
       }
     }
   },
-  beforeCreate () {
-    // axios.get('https://yowlteam.herokuapp.com/api/users')
-    //   .then((response) => {
-    //     console.log(response.data)
-    //     this.user = response.data
-    //     this.newPseudo = this.user[0].pseudo
-    //     this.newEmail = this.user[0].email
-    //   })
-    //   .catch()
-  },
   created () {
     this.user = this.getUser
-    console.log(this.user)
     this.newPseudo = this.user.pseudo
     this.newEmail = this.user.email
+    this.newBirthDate = this.user.birth_date ?? ''
   }
 }
 </script>
