@@ -35,9 +35,6 @@ export default {
   // },
   methods: {
     createComment (newComment) {
-      console.log('description is ', newComment)
-      console.log(this.user.id)
-      console.log(this.postId)
       if (newComment !== '') {
         axios.post('https://yowlteam.herokuapp.com/api/comments',
           {
