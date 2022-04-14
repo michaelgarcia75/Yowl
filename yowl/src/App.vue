@@ -5,7 +5,7 @@
     </router-link>
     <SearchBar @getPostBySearch="getPostBySearch"/>
     <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
-    <router-link to="/admin">Admin</router-link> |
+    <router-link v-if="isLoggedIn && getUser && user.is_admin === 1" to="/admin">Admin</router-link>
     <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
     <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
     <DropDownMenu menu-title="Menu">
@@ -19,7 +19,7 @@
       <CommunityButton/>
       </section>
       <section v-if="isLoggedIn" class="option">
-        <a @click="logout" >Log Out</a>
+        <a @click="logout(), user={}" >Log Out</a>
       </section>
       <section class="option">
         <span class="desc">Dark mode // OPTION</span>
@@ -147,6 +147,9 @@ export default {
       //   }
       // }
     },
+    getUserLogin () {
+      this.user = this.getUser
+    },
     logout () {
       const instance = axios.create({
         baseURL: 'https://yowlteam.herokuapp.com/api'
@@ -203,6 +206,7 @@ export default {
   created () {
     this.getPostBySearch()
     this.user = this.getUser
+    console.log('admin is', this.user.is_admin)
     axios.get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
         this.posts = response.data
