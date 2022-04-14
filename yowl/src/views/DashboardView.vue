@@ -17,6 +17,7 @@
 import axios from 'axios'
 import UserSettings from '@/components/SpecialComponents/UserSettings.vue'
 import PostManager from '@/components/SharedComponents/PostManager.vue'
+import { mapGetters } from 'vuex'
 // import UpVotedPostsManager from '@/components/SharedComponents/UpVotedPostsManager.vue'
 
 export default {
@@ -29,10 +30,16 @@ export default {
   data () {
     return {
       postsFiltered: [],
+      user: {},
       userId: 1
     }
   },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'getUser'])
+  },
   created () {
+    this.user = this.getUser
+    this.userId = this.user.id
     axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
       .then((response) => {
         // console.log('posts is', response.data)
