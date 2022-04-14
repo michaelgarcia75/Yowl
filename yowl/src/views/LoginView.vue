@@ -8,7 +8,7 @@
       <input v-model="password" placeholder="Password" type="password" />
       <br />
       <br />
-      <button type="submit">Login</button>
+      <button type="submit" @click="$emit('getUserLogin')">Login</button>
     </form>
   </div>
 </template>
