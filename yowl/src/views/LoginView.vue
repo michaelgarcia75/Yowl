@@ -40,7 +40,7 @@ export default {
           // console.log('user is', response.data.user)
           this.$router.push('/')
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.log(error.response.data))
     }
   }
 }
