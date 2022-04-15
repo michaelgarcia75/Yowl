@@ -1,31 +1,26 @@
 <template>
   <div class="postManager">
-    <EachPost v-for="post in postsFiltered" :key="post.id" :post="post" :userId="user.id" :userName="user.pseudo"/>
+    <EachPost v-for="post in postsFiltered" :key="post.id" :post="post" :user="user"/>
   </div>
 </template>
 
 <script>
-// import axios from 'axios'
 import EachPost from '@/components/SharedComponents/EachPost.vue'
-import { mapGetters } from 'vuex'
 export default {
-  props: ['postsFiltered'],
+  props: ['postsFiltered', 'user'],
   name: 'IndexView',
   components: {
     EachPost
   },
   data () {
     return {
-      user: {}
     }
   },
   computed: {
-    ...mapGetters(['isLoggedIn', 'getUser'])
   },
   methods: {
   },
   created () {
-    this.user = this.getUser
   }
 }
 </script>
