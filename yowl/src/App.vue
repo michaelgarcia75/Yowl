@@ -26,7 +26,7 @@
     </DropDownMenu>
 
   </nav>
-  <router-view :postsFiltered="postsFiltered" :searchContent="searchContent"/>
+  <router-view :postsSandF="postsSandF" :searchContent="searchContent"/>
 </template>
 
 <script>
@@ -45,7 +45,7 @@ export default {
       posts: [],
       categories: [],
       communities: [],
-      postsFiltered: this.posts,
+      postsSandF: this.posts,
       categoryId: 0,
       searchContent: '',
       filterAll: true,
@@ -74,12 +74,12 @@ export default {
         axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
           .then((response) => {
             this.searchResult = [...response.data]
-            this.postsFiltered = [...response.data]
+            this.postsSandF = [...response.data]
           })
       } else {
         axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent + '&category=' + this.categoryId)
           .then((response) => {
-            this.postsFiltered = [...response.data]
+            this.postsSandF = [...response.data]
           })
       }
     },
@@ -89,14 +89,14 @@ export default {
           axios.get('https://yowlteam.herokuapp.com/api/posts')
             .then((response) => {
               this.posts = response.data
-              this.postsFiltered = response.data
+              this.postsSandF = response.data
             })
             .catch(error => console.log(error))
         } else {
           axios.get('https://yowlteam.herokuapp.com/api/posts/filter?category=' + categoryId)
             .then((response) => {
               this.categoryId = categoryId
-              this.postsFiltered = [...response.data]
+              this.postsSandF = [...response.data]
             })
         }
       } else {
@@ -105,7 +105,7 @@ export default {
         } else {
           axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + this.searchContent + '&category=' + categoryId)
             .then((response) => {
-              this.postsFiltered = [...response.data]
+              this.postsSandF = [...response.data]
             })
         }
       }
@@ -113,10 +113,7 @@ export default {
     getPostBySearchAndCategoryFilter (searchContent, categoryId) {
       axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
     },
-    // getUserLogin () {
-    //   this.user = this.getUser
-    //   console.log('user is', this.user)
-    // },
+
     logout () {
       const instance = axios.create({
         baseURL: 'https://yowlteam.herokuapp.com/api'
@@ -139,7 +136,7 @@ export default {
     axios.get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
         this.posts = response.data
-        this.postsFiltered = response.data
+        this.postsSandF = response.data
       })
       .catch(error => console.log(error))
     axios.get('https://yowlteam.herokuapp.com/api/categories')

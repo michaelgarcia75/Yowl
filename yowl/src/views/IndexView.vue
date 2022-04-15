@@ -17,7 +17,7 @@ import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'IndexView',
-  props: ['postsFiltered', 'searchContent'],
+  props: ['postsSandF', 'searchContent'],
   components: {
     CreatePostButton,
     PostManager,
