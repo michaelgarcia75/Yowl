@@ -10,7 +10,7 @@
     <VoteButtons :post="post" />
     <button class="hover" @click="() => TogglePopUp('buttonTrigger')" v-if="userID === this.post.user_id">Edit Post</button>
     <button class="hover" @click="this.$emit('deletePost', postId)" v-if="userID === this.post.user_id">Delete Post</button>
-    <button class="hover" id="reportButton" @click="this.$emit('ReportPost', postId)" v-if="PostIsReported === 0">Report this post</button>
+    <button class="hover" id="reportButton" @click="ReportPost(postId)" v-if="PostIsReported === 0 && userID !== this.post.user_id">Report this post</button>
     <CommentsManager v-if="commentsFiltered.length !== 0" :commentsFiltered="commentsFiltered" :postId="postId" :users="users"/>
     <EditPost
       v-if="popupTrigger.buttonTrigger"
@@ -81,6 +81,16 @@ export default {
           console.log('response is ', response)
           this.postNewTitle = postTitle
           this.postNewContent = postContent
+        })
+    },
+    ReportPost (postId) {
+      console.log('in report post post id is ', postId)
+      axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
+        {
+          is_reported: 1
+        })
+        .then((response) => {
+          this.PostIsReported = 1
         })
     }
   },
