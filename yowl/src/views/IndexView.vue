@@ -82,6 +82,7 @@ export default {
       .get('https://yowlteam.herokuapp.com/api/comments')
       .then((response) => {
         this.comments = response.data
+        console.log('A: ', this.comments)
       })
       .catch((error) => console.log(error))
     axios.get('https://yowlteam.herokuapp.com/api/users')

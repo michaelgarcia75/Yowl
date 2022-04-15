@@ -6,7 +6,7 @@
           <p>COMMENTS</p>
           <p>UPVOTES</p>
         </div>
-         <PostManager :postsFiltered="postsFiltered" @deletePost="deletePost" :user="user"
+         <PostManager v-if="postsFiltered.lenght !== 0" :postsFiltered="postsFiltered" @deletePost="deletePost" :user="user" :users="users" :communities="communities" :comments="comments"
          @ReportPost="ReportPost"/>
                  <!--<UpVotedPostsManager/> -->
 
@@ -31,6 +31,9 @@ export default {
   data () {
     return {
       postsFiltered: [],
+      comments: [],
+      users: [],
+      communities: [],
       user: {},
       userId: 1
     }
@@ -66,7 +69,24 @@ export default {
       .then((response) => {
         // console.log('posts is', response.data)
         this.postsFiltered = response.data
-        // console.log('post filtered is', this.postsFiltered)
+        console.log('post filtered is', this.postsFiltered)
+      })
+      .catch(error => console.log(error))
+    axios
+      .get('https://yowlteam.herokuapp.com/api/communities')
+      .then((response) => {
+        this.communities = response.data
+      })
+      .catch((error) => console.log(error))
+    axios
+      .get('https://yowlteam.herokuapp.com/api/comments')
+      .then((response) => {
+        this.comments = response.data
+      })
+      .catch((error) => console.log(error))
+    axios.get('https://yowlteam.herokuapp.com/api/users')
+      .then((response) => {
+        this.users = response.data
       })
       .catch(error => console.log(error))
   }
