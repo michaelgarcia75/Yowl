@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import IndexView from '../views/IndexView.vue'
+import auth from '../middleware/auth'
 
 const routes = [
   {
@@ -23,7 +24,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/dashboard',
@@ -31,7 +35,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/DashboardView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/DashboardView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/communities',
@@ -39,7 +46,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/CommunitiesView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/CommunitiesView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/admin',
@@ -47,7 +57,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/admin/users',
@@ -55,7 +68,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminUsersView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminUsersView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/admin/posts',
@@ -63,7 +79,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminPostsView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminPostsView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/admin/comments',
@@ -71,7 +90,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCommentsView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCommentsView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/admin/communities',
@@ -79,7 +101,10 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCommunitiesView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCommunitiesView.vue'),
+    meta: {
+      middleware: auth
+    }
   },
   {
     path: '/admin/categories',
@@ -87,13 +112,55 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCategoriesView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminCategoriesView.vue'),
+    meta: {
+      middleware: auth
+    }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+// Creates a `nextMiddleware()` function which not only
+// runs the default `next()` callback but also triggers
+// the subsequent Middleware function.
+function nextFactory (context, middleware, index) {
+  const subsequentMiddleware = middleware[index]
+  // If no subsequent Middleware exists,
+  // the default `next()` callback is returned.
+  if (!subsequentMiddleware) return context.next
+
+  return (...parameters) => {
+    // Run the default Vue Router `next()` callback first.
+    context.next(...parameters)
+    // Then run the subsequent Middleware with a new
+    // `nextMiddleware()` callback.
+    const nextMiddleware = nextFactory(context, middleware, index + 1)
+    subsequentMiddleware({ ...context, next: nextMiddleware })
+  }
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.middleware) {
+    const middleware = Array.isArray(to.meta.middleware)
+      ? to.meta.middleware
+      : [to.meta.middleware]
+
+    const context = {
+      from,
+      next,
+      router,
+      to
+    }
+    const nextMiddleware = nextFactory(context, middleware, 1)
+
+    return middleware[0]({ ...context, next: nextMiddleware })
+  }
+
+  return next()
 })
 
 export default router
