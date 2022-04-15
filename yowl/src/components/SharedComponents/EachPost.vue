@@ -1,6 +1,6 @@
 <template>
   <div class="eachPost">
-    <p>{{community.name}} Posted by {{userNAME}} {{moment(date).fromNow()}}</p>
+    <p v-if="community.lenght !== 0">{{community.name}} Posted by {{userNAME}} {{moment(date).fromNow()}}</p>
     <h1>{{ postNewTitle }}</h1>
     <br />
     {{ postNewContent }}
@@ -54,7 +54,7 @@ export default {
     return {
       editPostForm: false,
       commentsFiltered: [],
-      community: [],
+      community: {},
       date: this.post.created_at,
       postId: this.post.id,
       postNewTitle: this.post.title,
@@ -84,29 +84,12 @@ export default {
     }
   },
   created () {
-    // console.log('C: ', this.comments)
     this.moment = moment
     this.commentsFiltered = this.comments.filter(comment => comment.post_id === this.post.id)
-    console.log('commentsFiltered : ', this.commentsFiltered)
     this.postUser = this.users.filter(user => user.id === this.post.user_id)
-    this.community = this.communities.filter(community => community.id === this.post.community_id)
-    // axios.get('https://yowlteam.herokuapp.com/api/users/' + this.post.user_id)
-    //   .then((response) => {
-    //     this.postUser = response.data
-    //   })
-    //   .catch(error => console.log(error))
-    // axios.get('https://yowlteam.herokuapp.com/api/comments/post/' + this.post.id)
-    //   .then((response) => {
-    //     // console.log('comments is', response.data)
-    //     this.commentsFiltered = response.data
-    //     // console.log('comments filtered is', this.commentsFiltered)
-    //   })
-    //   .catch(error => console.log(error))
-    // axios.get('https://yowlteam.herokuapp.com/api/communities/' + this.post.community_id)
-    //   .then((response) => {
-    //     this.community = response.data
-    //   })
-    //   .catch(error => console.log(error))
+    const communityArray = this.communities.filter(community => community.id === this.post.community_id)
+    this.community = communityArray.find(obj => { return obj.id === this.post.community_id })
+    console.log('C: ', this.community)
   }
 }
 </script>
