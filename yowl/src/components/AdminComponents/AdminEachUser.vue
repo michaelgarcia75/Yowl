@@ -78,6 +78,12 @@ export default {
     ChangeUserEditForm () {
       this.userEditForm = !this.userEditForm
     },
+    CloseUserEditForm () {
+      this.userEditForm = !this.userEditForm
+      this.userNewName = this.user.pseudo
+      this.userNewEmail = this.user.email
+      this.userNewRole = this.user.is_admin
+    },
     ChangeRoleOption () {
       // console.log('in change option function user new role is ', this.userNewRole)
       if (this.userNewRole === 1 || this.userNewRole === 'Admin') {
