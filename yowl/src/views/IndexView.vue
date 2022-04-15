@@ -10,18 +10,18 @@
 
 <script>
 import axios from 'axios'
-import CreatePostButton from '@/components/SharedComponents/CreatePostButton.vue'
+// import CreatePostButton from '@/components/SharedComponents/CreatePostButton.vue'
 import PostManager from '@/components/SharedComponents/PostManager.vue'
-import TopCommunities from '@/components/SharedComponents/TopCommunities.vue'
+// import TopCommunities from '@/components/SharedComponents/TopCommunities.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'IndexView',
   props: ['postsFiltered', 'searchContent'],
   components: {
-    CreatePostButton,
-    PostManager,
-    TopCommunities
+    // CreatePostButton,
+    PostManager
+    // TopCommunities
   },
   data () {
     return {
@@ -59,3 +59,9 @@ export default {
   }
 }
 </script>
+
+<style>
+body{
+  background-color: antiquewhite;
+}
+</style>

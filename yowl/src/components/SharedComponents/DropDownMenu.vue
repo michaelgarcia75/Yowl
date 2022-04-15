@@ -50,3 +50,19 @@ export default {
 }
 
 </script>
+
+<style>
+button.dropDownMenuButton{
+  background-color: white;
+  border-radius: 3px;
+  border-color: #01a0f9;
+  cursor: pointer;
+}
+.dropDownMenuWrapper{
+  position: absolute;
+  margin-top: 1px;
+}
+.dropdownMenu{
+  position: absolute;
+}
+</style>

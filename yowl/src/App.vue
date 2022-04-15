@@ -1,13 +1,16 @@
 <template>
   <nav class="NavBar">
     <router-link to="/">
-      <img alt="Vue logo" src="./assets/logo.png">
+      <img id="logo" alt="Vue logo" src="./assets/logo.png">
     </router-link>
+    <p id="titleYowl">YOWL</p>
     <SearchBar @getPostBySearch="getPostBySearch"/>
     <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
-    <router-link  to="/admin">Admin</router-link>
-    <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
-    <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
+    <div class="links">
+    <router-link class="adminLink" to="/admin">Admin</router-link>
+    <router-link class="loginLink" v-if="!isLoggedIn" to="/login">Login</router-link>
+    <router-link class="registerLink" v-if="!isLoggedIn" to="/register">Register</router-link>
+    </div>
     <DropDownMenu menu-title="Menu">
       <section class="option">
         <span v-if="isLoggedIn" class="desc">Logged as {{user.pseudo}} </span>
@@ -152,7 +155,25 @@ export default {
 
 <style>
 .NavBar {
-  background-color: bisque;
+  background: linear-gradient(to left top, antiquewhite, bisque)
+}
+#titleYowl{
+  padding: 0;
+  width: fit-content;
+  position: absolute;
+  font-weight: bolder;
+  font-family: Franklin Gothic Medium;
+  font-size: 70px;
+  margin-left: 20%;
+  margin-top: 8px;
+  background: -webkit-linear-gradient(#29f29b, #15c8cb, #01a0f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#logo{
+  position: absolute;
+  margin-left: -28%;
+  margin-top: -1%;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -161,9 +182,13 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+body{
+  margin:0px;
+}
 
 nav {
   padding: 30px;
+  height: 100px;
 }
 
 nav a {
@@ -175,5 +200,23 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+.links{
+  margin-top: -2%;
+  position: absolute;
+  margin-left: 85%;
+}
+.loginLink{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.adminLink:hover {
+  color: #29f29b;
+}
+.loginLink:hover {
+  color: #15c8cb;
+}
+.registerLink:hover {
+  color: #01a0f9;
 }
 </style>
