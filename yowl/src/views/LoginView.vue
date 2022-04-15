@@ -37,7 +37,7 @@ export default {
         .then((response) => {
           this.setUser(response.data.user)
           this.setToken(response.data.access_token)
-          console.log('user is', response.data.user)
+          // console.log('user is', response.data.user)
           this.$router.push('/')
         })
         .catch((error) => console.log(error))

@@ -31,10 +31,10 @@ export default {
   methods: {
     openClose () {
       const closeListerner = (e) => {
-        if (this.catchOutsideClick(e, this.$refs.menu)) {
-          window.removeEventListener('click', closeListerner)
-          this.isOpen = false
-        }
+        // if (this.catchOutsideClick(e, this.$refs.menu)) {
+        //   // window.removeEventListener('click', closeListerner)
+        //   this.isOpen = false
+        // }
       }
       window.addEventListener('click', closeListerner)
       this.isOpen = !this.isOpen

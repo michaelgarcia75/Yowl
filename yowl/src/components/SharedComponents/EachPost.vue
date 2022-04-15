@@ -30,7 +30,7 @@ import { ref } from 'vue'
 import EditPost from '@/components/SharedComponents/EditPost.vue'
 
 export default {
-  props: ['post', 'userId', 'userName'],
+  props: ['post', 'comments', 'userId', 'userName'],
   name: 'IndexView',
   components: {
     VoteButtons,
@@ -79,18 +79,20 @@ export default {
   },
   created () {
     this.moment = moment
+    this.commentsFiltered = this.comments.filter(comment => comment.post_id === this.post.id)
+
     axios.get('https://yowlteam.herokuapp.com/api/users/' + this.post.user_id)
       .then((response) => {
         this.postUser = response.data
       })
       .catch(error => console.log(error))
-    axios.get('https://yowlteam.herokuapp.com/api/comments/post/' + this.post.id)
-      .then((response) => {
-        // console.log('comments is', response.data)
-        this.commentsFiltered = response.data
-        // console.log('comments filtered is', this.commentsFiltered)
-      })
-      .catch(error => console.log(error))
+    // axios.get('https://yowlteam.herokuapp.com/api/comments/post/' + this.post.id)
+    //   .then((response) => {
+    //     // console.log('comments is', response.data)
+    //     this.commentsFiltered = response.data
+    //     // console.log('comments filtered is', this.commentsFiltered)
+    //   })
+    //   .catch(error => console.log(error))
 
     axios.get('https://yowlteam.herokuapp.com/api/communities/' + this.post.community_id)
       .then((response) => {

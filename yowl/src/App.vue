@@ -5,8 +5,8 @@
     </router-link>
     <SearchBar @getPostBySearch="getPostBySearch"/>
     <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
-    <router-link  to="/admin">Admin</router-link>
-    <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+    <router-link  v-if="isLoggedIn && user && user.is_admin === 1" to="/admin">Admin</router-link>
+    <router-link v-if="!isLoggedIn" to="/login" @getUserLogin="getUserLogin">Login</router-link>
     <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
     <DropDownMenu menu-title="Menu">
       <section class="option">
@@ -107,9 +107,10 @@ export default {
     getPostBySearchAndCategoryFilter (searchContent, categoryId) {
       axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
     },
-    // getUserLogin () {
-    //   this.user = this.getUser
-    // },
+    getUserLogin () {
+      this.user = this.getUser
+      console.log('user is', this.user)
+    },
     logout () {
       const instance = axios.create({
         baseURL: 'https://yowlteam.herokuapp.com/api'
