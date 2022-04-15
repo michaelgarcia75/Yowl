@@ -31,6 +31,9 @@ export default {
   data () {
     return {
       postsFiltered: [],
+      comments: [],
+      users: [],
+      communities: [],
       user: {},
       userId: 1
     }
@@ -66,6 +69,23 @@ export default {
         // console.log('posts is', response.data)
         this.postsFiltered = response.data
         // console.log('post filtered is', this.postsFiltered)
+      })
+      .catch(error => console.log(error))
+    axios
+      .get('https://yowlteam.herokuapp.com/api/communities')
+      .then((response) => {
+        this.communities = response.data
+      })
+      .catch((error) => console.log(error))
+    axios
+      .get('https://yowlteam.herokuapp.com/api/comments')
+      .then((response) => {
+        this.comments = response.data
+      })
+      .catch((error) => console.log(error))
+    axios.get('https://yowlteam.herokuapp.com/api/users')
+      .then((response) => {
+        this.users = response.data
       })
       .catch(error => console.log(error))
   }

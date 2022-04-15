@@ -7,7 +7,7 @@
 <script>
 import EachPost from '@/components/SharedComponents/EachPost.vue'
 export default {
-  props: ['postsFiltered', 'comments', 'user', 'users', 'communities'],
+  props: ['user', 'postsFiltered', 'comments', 'users', 'communities'],
   name: 'IndexView',
   components: {
     EachPost
@@ -20,11 +20,12 @@ export default {
   },
   methods: {
     deBug () {
-      console.log('this user in post manager is ', this.user)
+      // console.log('this user in post manager is ', this.user)
     }
   },
   created () {
     this.deBug()
+    // console.log('B: ', this.$props.comments)
   }
 }
 </script>

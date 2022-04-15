@@ -11,7 +11,7 @@
 import moment from 'moment'
 
 export default {
-  props: ['comment'],
+  props: ['comment', 'users', 'user'],
   name: 'IndexView',
   data () {
     return {
@@ -20,6 +20,8 @@ export default {
   },
   created () {
     this.moment = moment
+    console.log('HELLOOOO WOOOORLD !!!')
+    console.log('E: ', this.comment)
     this.commentUser = this.users.filter(user => user.id === this.comment.user_id)
     // axios.get('https://yowlteam.herokuapp.com/api/users/' + this.comment.user_id)
     //   .then((response) => {

@@ -10,7 +10,7 @@
     <button class="hover" @click="() => TogglePopUp('buttonTrigger')" v-if="userID === this.post.user_id">Edit Post</button>
     <button class="hover" @click="this.$parent.$emit('deletePost', postId)" v-if="userID === this.post.user_id">Delete Post</button>
     <button class="hover" id="reportButton" @click="this.$parent.$emit('ReportPost', postId)" v-if="PostIsReported === 0">Report this post</button>
-    <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId" :users="users"/>
+    <CommentsManager v-if="commentsFiltered.length !== 0" :commentsFiltered="commentsFiltered" :postId="postId" :users="users"/>
     <EditPost
       v-if="popupTrigger.buttonTrigger"
       :TogglePopUp="() => TogglePopUp('buttonTrigger')"
@@ -84,8 +84,10 @@ export default {
     }
   },
   created () {
+    // console.log('C: ', this.comments)
     this.moment = moment
     this.commentsFiltered = this.comments.filter(comment => comment.post_id === this.post.id)
+    console.log('commentsFiltered : ', this.commentsFiltered)
     this.postUser = this.users.filter(user => user.id === this.post.user_id)
     this.community = this.communities.filter(community => community.id === this.post.community_id)
     // axios.get('https://yowlteam.herokuapp.com/api/users/' + this.post.user_id)
