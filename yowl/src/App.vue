@@ -5,7 +5,7 @@
     </router-link>
     <SearchBar @getPostBySearch="getPostBySearch"/>
     <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
-    <router-link  to="/admin">Admin</router-link>
+    <router-link v-if="isLoggedIn && user.is_admin === 1" to="/admin">Admin</router-link>
     <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
     <router-link v-if="!isLoggedIn" to="/register">Register</router-link>
     <DropDownMenu menu-title="Menu">
@@ -18,7 +18,7 @@
       <section v-if="isLoggedIn" class="option">
       </section>
       <section v-if="isLoggedIn" class="option">
-        <a @click="logout(), user={}" >Log Out</a>
+        <a @click="logout()" >Log Out</a>
       </section>
       <section class="option">
         <span class="desc">Dark mode // OPTION</span>
@@ -34,7 +34,7 @@ import axios from 'axios'
 import SearchBar from '@/components/SharedComponents/SearchBar.vue'
 import CategoriesFilter from '@/components/SharedComponents/CategoriesFilter.vue'
 import DropDownMenu from '@/components/SharedComponents/DropDownMenu.vue'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -49,7 +49,7 @@ export default {
       categoryId: 0,
       searchContent: '',
       filterAll: true,
-      user: {}
+      loggedUser: {}
     }
   },
   components: {
@@ -58,8 +58,14 @@ export default {
     DropDownMenu
   },
   computed: {
+    ...mapState(['user']),
     ...mapGetters(['isLoggedIn', 'getToken', 'getUser'])
   },
+  // watch: {
+  //   user (newUser, oldUser) {
+  //     this.user = newUser
+  //   }
+  // },
   methods: {
     ...mapMutations(['setUser', 'setToken']),
     getPostBySearch (searchContent) {
@@ -124,12 +130,12 @@ export default {
           localStorage.clear()
           this.$router.push('/')
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.log(error.response.data))
     }
   },
   created () {
     this.getPostBySearch()
-    this.user = this.getUser
+    // this.user = this.getUser
     axios.get('https://yowlteam.herokuapp.com/api/posts')
       .then((response) => {
         this.posts = response.data
