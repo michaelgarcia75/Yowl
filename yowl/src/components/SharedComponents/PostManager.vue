@@ -32,7 +32,8 @@ export default {
 
 <style>
 .postManager {
-  background-color: aquamarine;
+  background-color: antiquewhite;
   width: 80%;
+  margin-left:25%;
 }
 </style>

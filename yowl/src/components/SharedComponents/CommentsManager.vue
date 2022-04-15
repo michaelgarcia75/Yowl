@@ -3,7 +3,7 @@
 <button v-if="!isOpen" @click="isOpen=true">Hide Comments</button>
 <button v-if="isAdd" @click="isAdd=false">Add Comment</button>
 <button v-if="!isAdd" @click="createComment(newComment), isAdd=true">Submit Comment</button>
-<span v-if="!isAdd" @click="isAdd=true">↩️</span>
+<span id="returnButton" v-if="!isAdd" @click="isAdd=true">↩️</span>
 <br>
 <textarea v-if="!isAdd" v-model="newComment" class="addComment">
   </textarea>
@@ -64,5 +64,11 @@ export default {
   width: 30%;
   height: 80px;
   margin-top: 20px;
+}
+button{
+  cursor: pointer;
+}
+#returnButton{
+  cursor: pointer;
 }
 </style>

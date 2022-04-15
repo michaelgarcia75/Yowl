@@ -1,9 +1,10 @@
 <template>
   <div class="eachPost">
     <p v-if="community.lenght !== 0">{{community.name}} Posted by {{userNAME}} {{moment(date).fromNow()}}</p>
+    <br />
     <h1>{{ postNewTitle }}</h1>
     <br />
-    {{ postNewContent }}
+    <div class="postContent">{{ postNewContent }}</div>
     <br />
     <br />
     <VoteButtons :post="post" />
@@ -99,6 +100,9 @@ export default {
   background-color: antiquewhite;
   padding: 10px;
   margin: 20px;
+  border: solid 2px #15c8cb;
+  border-radius: 3px;
+  width: 50%;
 }
 
 .editPost{
@@ -108,9 +112,23 @@ export default {
   background-color: transparent;
   border: none;
 }
-
-#reportButton {
-  color: red;
+.eachPost p{
+  position: relative;
+  float: left;
+  margin-top: -8px;
+  font-size: 15px;
+  margin-bottom: 5px;
 }
-
+.eachPost h1{
+  position: relative;
+  float: left;
+  margin-top: -8px;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.postContent{
+  font-size: 15px;
+  width: 100%;
+  text-align: center;
+}
 </style>

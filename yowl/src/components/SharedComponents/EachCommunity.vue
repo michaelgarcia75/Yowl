@@ -86,6 +86,7 @@ export default {
 }
 button{
   margin-bottom: 10px;
+  cursor: pointer;
 }
 /* .communityTitle{
   height: 50px;

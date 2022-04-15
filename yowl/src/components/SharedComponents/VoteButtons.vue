@@ -65,3 +65,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.image{
+  cursor: pointer;
+}
+</style>
