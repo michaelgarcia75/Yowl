@@ -52,6 +52,7 @@ export default {
         })
     },
     ReportPost (postId) {
+      console.log('in report post post id is ', postId)
       axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
         {
           is_reported: 1
