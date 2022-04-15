@@ -47,7 +47,7 @@ export default {
       communities: [],
       postsFiltered: this.posts,
       categoryId: 0,
-      searchContent: '',
+      searchContent: 'big',
       filterAll: true,
       loggedUser: {}
     }
@@ -84,7 +84,8 @@ export default {
       }
     },
     getPostByCategoryFilter (categoryId = null) {
-      if (this.searchContent === '') {
+      console.log('searchResult', this.searchResult)
+      if (this.searchResult.length === 0 && !this.searchContent) {
         if (categoryId === null) {
           axios.get('https://yowlteam.herokuapp.com/api/posts')
             .then((response) => {

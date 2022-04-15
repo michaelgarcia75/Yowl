@@ -25,7 +25,7 @@ export default {
   },
   created () {
     this.deBug()
-    console.log('B: ', this.communities)
+    // console.log('B: ', this.communities)
   }
 }
 </script>

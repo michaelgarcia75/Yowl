@@ -62,7 +62,7 @@ export default {
         this.communities = response.data
       })
       .catch((error) => console.log(error))
-    console.log('A: ', this.communities)
+    // console.log('A: ', this.communities)
     axios
       .get('https://yowlteam.herokuapp.com/api/comments')
       .then((response) => {
