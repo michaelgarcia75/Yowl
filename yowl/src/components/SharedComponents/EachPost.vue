@@ -9,7 +9,7 @@
     <VoteButtons :post="post" />
     <button class="hover" @click="() => TogglePopUp('buttonTrigger')" v-if="userID === this.post.user_id">Edit Post</button>
     <button class="hover" @click="this.$parent.$emit('deletePost', postId)" v-if="userID === this.post.user_id">Delete Post</button>
-    <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId"/>
+    <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId" :users="users" />
     <EditPost
       v-if="popupTrigger.buttonTrigger"
       :TogglePopUp="() => TogglePopUp('buttonTrigger')"
@@ -30,7 +30,7 @@ import { ref } from 'vue'
 import EditPost from '@/components/SharedComponents/EditPost.vue'
 
 export default {
-  props: ['post', 'comments', 'userId', 'userName'],
+  props: ['post', 'comments', 'userId', 'userName', 'users', 'communities'],
   name: 'IndexView',
   components: {
     VoteButtons,
@@ -59,7 +59,8 @@ export default {
       postNewTitle: this.post.title,
       postNewContent: this.post.content,
       userID: this.userId,
-      userNAME: this.userName
+      userNAME: this.userName,
+      postUser: {}
     }
   },
   methods: {
@@ -80,12 +81,13 @@ export default {
   created () {
     this.moment = moment
     this.commentsFiltered = this.comments.filter(comment => comment.post_id === this.post.id)
-
-    axios.get('https://yowlteam.herokuapp.com/api/users/' + this.post.user_id)
-      .then((response) => {
-        this.postUser = response.data
-      })
-      .catch(error => console.log(error))
+    this.postUser = this.users.filter(user => user.id === this.post.user_id)
+    this.community = this.communities.filter(community => community.id === this.post.community_id)
+    // axios.get('https://yowlteam.herokuapp.com/api/users/' + this.post.user_id)
+    //   .then((response) => {
+    //     this.postUser = response.data
+    //   })
+    //   .catch(error => console.log(error))
     // axios.get('https://yowlteam.herokuapp.com/api/comments/post/' + this.post.id)
     //   .then((response) => {
     //     // console.log('comments is', response.data)
@@ -93,12 +95,11 @@ export default {
     //     // console.log('comments filtered is', this.commentsFiltered)
     //   })
     //   .catch(error => console.log(error))
-
-    axios.get('https://yowlteam.herokuapp.com/api/communities/' + this.post.community_id)
-      .then((response) => {
-        this.community = response.data
-      })
-      .catch(error => console.log(error))
+    // axios.get('https://yowlteam.herokuapp.com/api/communities/' + this.post.community_id)
+    //   .then((response) => {
+    //     this.community = response.data
+    //   })
+    //   .catch(error => console.log(error))
   }
 }
 </script>

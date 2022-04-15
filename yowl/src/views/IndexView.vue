@@ -2,7 +2,7 @@
   <div class="index">
     <p v-if="searchContent"> Research : {{searchContent}}</p>
     <CreatePostButton @save="save" @filesChange="filesChange" :user="user"/>
-    <PostManager :user="user" :postsFiltered="postsFiltered" :comments="comments"/>
+    <PostManager :user="user" :postsFiltered="postsFiltered" :comments="comments" :users="users" :communities="communities" />
     <TopCommunities/>
         <router-link to="/communities">Communities</router-link>
   </div>
@@ -29,6 +29,7 @@ export default {
       categories: [],
       communities: [],
       comments: [],
+      users: [],
       user: []
     }
   },
@@ -57,6 +58,11 @@ export default {
         this.comments = response.data
       })
       .catch((error) => console.log(error))
+    axios.get('https://yowlteam.herokuapp.com/api/users')
+      .then((response) => {
+        this.users = response.data
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>

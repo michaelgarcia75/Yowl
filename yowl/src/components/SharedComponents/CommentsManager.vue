@@ -8,7 +8,7 @@
 <textarea v-if="!isAdd" v-model="newComment" class="addComment">
   </textarea>
   <div class="commentManager" v-if="!isOpen">
-    <EachComment  v-for="comment in commentsFiltered" :key="comment.id" :user="user" :comment="comment" />
+    <EachComment  v-for="comment in commentsFiltered" :key="comment.id" :user="user" :comment="comment" :users="users" />
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import axios from 'axios'
 // import { mapGetters } from 'vuex'
 
 export default {
-  props: ['commentsFiltered', 'postId'],
+  props: ['commentsFiltered', 'postId', 'users'],
   name: 'IndexView',
   components: {
     EachComment

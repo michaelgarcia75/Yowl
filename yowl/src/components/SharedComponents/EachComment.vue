@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -21,12 +20,13 @@ export default {
   },
   created () {
     this.moment = moment
-    axios.get('https://yowlteam.herokuapp.com/api/users/' + this.comment.user_id)
-      .then((response) => {
-        this.commentUser = response.data
-        console.log('comment user id', response.data)
-      })
-      .catch(error => console.log(error))
+    this.commentUser = this.users.filter(user => user.id === this.comment.user_id)
+    // axios.get('https://yowlteam.herokuapp.com/api/users/' + this.comment.user_id)
+    //   .then((response) => {
+    //     this.commentUser = response.data
+    //     console.log('comment user id', response.data)
+    //   })
+    //   .catch(error => console.log(error))
   }
 }
 </script>

@@ -1,13 +1,13 @@
 <template>
   <div class="postManager">
-    <EachPost v-for="post in postsFiltered" :key="post.id" :post="post" :user="user" :comments="comments"/>
+    <EachPost v-for="post in postsFiltered" :key="post.id" :post="post" :user="user" :comments="comments" :communities="communities" :users="users" />
   </div>
 </template>
 
 <script>
 import EachPost from '@/components/SharedComponents/EachPost.vue'
 export default {
-  props: ['postsFiltered', 'comments', 'user'],
+  props: ['postsFiltered', 'comments', 'user', 'users', 'communities'],
   name: 'IndexView',
   components: {
     EachPost
