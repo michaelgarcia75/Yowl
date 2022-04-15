@@ -93,6 +93,7 @@ export default {
     this.postUser = this.users.filter(user => user.id === this.post.user_id)
     const communityArray = this.communities.filter(community => community.id === this.post.community_id)
     this.community = communityArray.find(obj => { return obj.id === this.post.community_id })
+    console.log('community', communityArray)
     // console.log('C: ', this.community)
     if (this.isLoggedIn) {
       this.loggedUser = this.getUser

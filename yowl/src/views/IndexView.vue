@@ -2,7 +2,7 @@
   <div class="index">
     <p v-if="searchContent"> Research : {{searchContent}}</p>
     <CreatePostButton @save="save" @filesChange="filesChange" :user="user"/>
-    <PostManager v-if="comments.length !== 0 && communities.lenght !== 0" :user="user" :postsFiltered="postsFiltered" :comments="comments" :communities="communities" @ReportPost="ReportPost" @deletePost="deletePost" :users="users"/>
+    <PostManager v-if="comments.length !== 0 && communities.length !== 0" :user="user" :postsFiltered="postsFiltered" :comments="comments" :communities="communities" @ReportPost="ReportPost" @deletePost="deletePost" :users="users"/>
     <TopCommunities/>
         <router-link to="/communities">Communities</router-link>
   </div>
