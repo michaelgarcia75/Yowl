@@ -47,8 +47,8 @@
 <script>
 import axios from 'axios'
 import { mapGetters, mapMutations } from 'vuex'
-const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
-const regexDate = /^\d{4}-\d{2}-\d{2}$/
+// const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/
+// const regexDate = /^\d{4}-\d{2}-\d{2}$/
 export default {
   data () {
     return {
@@ -69,39 +69,45 @@ export default {
     ...mapMutations(['setUser']),
     editUser (userId, newPseudo, newEmail, newPassword, newBirthDate, confirmation) {
       this.errors = []
-      if (newPseudo === undefined || newPseudo.length === 0) {
-        this.errors.push('Username Field Empty')
-      }
-      if (newPassword === undefined || newPassword.length === 0) {
-        this.errors.push('Password Field Empty')
-      }
-      if (!regexEmail.test(newEmail)) {
-        this.errors.push('Please enter a valid email address')
-      }
-      if (!regexDate.test(this.newBirthDate)) {
-        this.errors.push('Please enter a valid birth date')
-      }
-      if (newPassword !== confirmation) {
-        this.errors.push('Password and Confirmation are not identical')
-      }
-      if (!this.errors.length) {
-        axios.put('https://yowlteam.herokuapp.com/api/users/' + userId, {
-          pseudo: newPseudo,
-          email: newEmail,
-          password: newPassword,
-          birth_date: newBirthDate
+      // if (newPseudo === undefined || newPseudo.length === 0) {
+      //   this.errors.push('Username Field Empty')
+      // }
+      // if (newPassword === undefined || newPassword.length === 0) {
+      //   this.errors.push('Password Field Empty')
+      // }
+      // if (!regexEmail.test(newEmail)) {
+      //   this.errors.push('Please enter a valid email address')
+      // }
+      // if (!regexDate.test(this.newBirthDate)) {
+      //   this.errors.push('Please enter a valid birth date')
+      // }
+      // if (newPassword !== confirmation) {
+      //   this.errors.push('Password and Confirmation are not identical')
+      // }
+      // if (!this.errors.length) {
+      axios.put('https://yowlteam.herokuapp.com/api/users/' + userId, {
+        pseudo: newPseudo,
+        email: newEmail,
+        password: newPassword,
+        password_confirmation: confirmation,
+        birth_date: newBirthDate
+      })
+        .then((data) => {
+          console.log(data)
+          console.log('User updated')
+          this.user.pseudo = newPseudo
+          this.user.email = newEmail
+          this.user.birth_date = newBirthDate
+          this.isOpen = true
+          this.setUser(this.user)
         })
-          .then((data) => {
-            console.log(data)
-            console.log('User updated')
-          })
-          .catch((err) => console.log(err))
-        this.user.pseudo = newPseudo
-        this.user.email = newEmail
-        this.user.birth_date = newBirthDate
-        this.isOpen = true
-        this.setUser(this.user)
-      }
+        .catch((error) => {
+          const json = JSON.parse(error.response.data)
+          for (const property in json) {
+            this.errors.push(json[property])
+          }
+          console.log(this.errors)
+        })
     }
   },
   created () {
