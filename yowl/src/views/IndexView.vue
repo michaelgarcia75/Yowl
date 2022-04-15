@@ -2,7 +2,7 @@
   <div class="index">
     <p v-if="searchContent"> Research : {{searchContent}}</p>
     <CreatePostButton @save="save" @filesChange="filesChange" :user="user"/>
-    <PostManager :user="user" :postsFiltered="postsFiltered" :comments="comments" :communities="communities" @ReportPost="ReportPost" @deletePost="deletePost" :users="users"/>
+    <PostManager v-if="comments.length !== 0" :user="user" :postsFiltered="postsFiltered" :comments="comments" :communities="communities" @ReportPost="ReportPost" @deletePost="deletePost" :users="users"/>
     <TopCommunities/>
         <router-link to="/communities">Communities</router-link>
   </div>
@@ -17,7 +17,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'IndexView',
-  props: ['postsSandF', 'searchContent'],
+  props: ['postsFiltered', 'searchContent'],
   components: {
     CreatePostButton,
     PostManager,
@@ -36,15 +36,6 @@ export default {
   methods: {
     deletePost (postId) {
       axios.delete('https://yowlteam.herokuapp.com/api/posts/' + postId)
-        .then((response) => {
-          axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
-            .then((response) => {
-            // console.log('posts is', response.data)
-              this.postsFiltered = response.data
-            // console.log('post filtered is', this.postsFiltered)
-            })
-            .catch(error => console.log(error))
-        })
     },
     ReportPost (postId) {
       console.log('in report post post id is ', postId)
@@ -59,13 +50,6 @@ export default {
   },
   created () {
     this.user = this.getUser
-    axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
-      .then((response) => {
-        // console.log('posts is', response.data)
-        this.postsFiltered = response.data
-        // console.log('post filtered is', this.postsFiltered)
-      })
-      .catch(error => console.log(error))
     axios
       .get('https://yowlteam.herokuapp.com/api/categories')
       .then((response) => {

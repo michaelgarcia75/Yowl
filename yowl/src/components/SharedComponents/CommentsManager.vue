@@ -8,7 +8,6 @@
 <textarea v-if="!isAdd" v-model="newComment" class="addComment">
   </textarea>
   <div class="commentManager" v-if="!isOpen">
-    huhuhuhhu
     <EachComment  v-for="comment in commentsFiltered" :key="comment.id" :user="user" :comment="comment" :users="users">HELLO</EachComment>
   </div>
 </template>
@@ -51,7 +50,7 @@ export default {
   },
   created () {
     // this.user = this.getUser
-    console.log('D: ', this.commentsFiltered)
+    // console.log('D: ', this.commentsFiltered)
   }
 }
 </script>
