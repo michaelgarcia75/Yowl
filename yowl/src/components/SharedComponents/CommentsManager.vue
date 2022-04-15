@@ -57,7 +57,7 @@ export default {
 
 <style>
 .commentManager {
-  background-color: aquamarine;
+  background-color: antiquewhite;
   width: 100%;
 }
 .addComment{

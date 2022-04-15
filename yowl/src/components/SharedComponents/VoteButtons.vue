@@ -68,6 +68,10 @@ export default {
 
 <style>
 .image{
+  position: absolute;
   cursor: pointer;
+  width: 14px;
+  margin-left: 10px;
+  margin-top: 17px;
 }
 </style>

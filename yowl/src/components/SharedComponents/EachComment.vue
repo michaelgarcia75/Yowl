@@ -41,5 +41,7 @@ export default {
   margin: 20px;
   margin-left: 25%;
   margin-right: 25%;
+  border: solid 2px #15c8cb;
+  border-radius: 3px;
 }
 </style>
