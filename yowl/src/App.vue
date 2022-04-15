@@ -107,10 +107,7 @@ export default {
     getPostBySearchAndCategoryFilter (searchContent, categoryId) {
       axios.get('https://yowlteam.herokuapp.com/api/posts/filter?text=' + searchContent)
     },
-    // getUserLogin () {
-    //   this.user = this.getUser
-    //   console.log('user is', this.user)
-    // },
+
     logout () {
       const instance = axios.create({
         baseURL: 'https://yowlteam.herokuapp.com/api'
