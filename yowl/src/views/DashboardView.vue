@@ -6,7 +6,8 @@
           <p>COMMENTS</p>
           <p>UPVOTES</p>
         </div>
-         <PostManager :postsFiltered="postsFiltered" @deletePost="deletePost"/>
+         <PostManager :postsFiltered="postsFiltered" @deletePost="deletePost" :user="user"
+         @ReportPost="ReportPost"/>
                  <!--<UpVotedPostsManager/> -->
 
     </div>
@@ -49,6 +50,21 @@ export default {
             })
             .catch(error => console.log(error))
         })
+    },
+    ReportPost (postId) {
+      axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
+        {
+          is_reported: 1
+        })
+      // .then((response) => {
+      //   axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
+      //     .then((response) => {
+      //     // console.log('posts is', response.data)
+      //       this.postsFiltered = response.data
+      //     // console.log('post filtered is', this.postsFiltered)
+      //     })
+      //     .catch(error => console.log(error))
+      // })
     }
   },
   created () {

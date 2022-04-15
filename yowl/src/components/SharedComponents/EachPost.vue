@@ -9,6 +9,7 @@
     <VoteButtons :post="post" />
     <button class="hover" @click="() => TogglePopUp('buttonTrigger')" v-if="userID === this.post.user_id">Edit Post</button>
     <button class="hover" @click="this.$parent.$emit('deletePost', postId)" v-if="userID === this.post.user_id">Delete Post</button>
+    <button class="hover" id="reportButton" @click="this.$parent.$emit('ReportPost', postId)" v-if="PostIsReported === 0">Report this post</button>
     <CommentsManager :commentsFiltered="commentsFiltered" :postId="postId"/>
     <EditPost
       v-if="popupTrigger.buttonTrigger"
@@ -30,7 +31,7 @@ import { ref } from 'vue'
 import EditPost from '@/components/SharedComponents/EditPost.vue'
 
 export default {
-  props: ['post', 'userId', 'userName'],
+  props: ['post', 'user'],
   name: 'IndexView',
   components: {
     VoteButtons,
@@ -58,11 +59,15 @@ export default {
       postId: this.post.id,
       postNewTitle: this.post.title,
       postNewContent: this.post.content,
-      userID: this.userId,
-      userNAME: this.userName
+      userID: this.user.id,
+      userNAME: this.user.pseudo,
+      PostIsReported: this.post.is_reported
     }
   },
   methods: {
+    debug () {
+      console.log('this post ID is ', this.postId, 'post is report is ', this.PostIsReported)
+    },
     UpdatePost (postId, postTitle, postContent) {
       console.log('I am in post manager update post function')
       axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
@@ -114,6 +119,10 @@ export default {
   margin-top: 20px;
   background-color: transparent;
   border: none;
+}
+
+#reportButton {
+  color: red;
 }
 
 </style>
