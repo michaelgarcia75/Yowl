@@ -8,8 +8,8 @@
         <td>{{ userNewRole }} </td>
         <td>{{postsOfOneUser.length}}</td>
         <td>
-            <button class='button' @click="ChangeUserEditForm(); ChangeRoleOption()">Edit</button>
-            <button class='button' v-if="userEditForm === false" @click="$emit('deleteUser', userId)">Delete</button>
+            <button class='buttonEdit' @click="ChangeUserEditForm(); ChangeRoleOption()">Edit</button>
+            <button class='buttonDelete' v-if="userEditForm === false" @click="$emit('deleteUser', userId)">Delete</button>
         </td>
     </tr>
     <tr v-else>
@@ -93,3 +93,21 @@ export default {
   }
 }
 </script>
+
+<style>
+#firstTable{
+  margin-left: auto;
+  margin-right: auto;
+}
+.buttonEdit{
+  background-color: white;
+  border-radius: 3px;
+  border-color: blue;
+  margin-left: 3px;
+}
+.buttonDelete{
+  background-color: white;
+  border-radius: 3px;
+  border-color: red;
+}
+</style>

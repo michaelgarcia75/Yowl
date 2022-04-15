@@ -15,3 +15,10 @@ export default {
   }
 }
 </script>
+
+<style>
+#firstTable{
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

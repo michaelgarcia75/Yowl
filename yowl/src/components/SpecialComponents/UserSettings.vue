@@ -12,7 +12,7 @@
     </ul>
   </p>
     <div class="settingContent" v-if="isOpen">
-      <img id="userImage" src="./hamzabg.jpg" />
+      <img id="userImage" src="../../assets/logo.png" />
       <div class="userSettingInfo">
         <h1>Username</h1>
         <p>{{ newPseudo }}</p>
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div v-if="!isOpen"  class="settingContent">
-      <img id="userImage" src="./hamzabg.jpg" />
+      <img id="userImage" src="../../assets/logo.png" />
       <div class="userSettingInfo">
         <h1>Username</h1>
         <input type="text" id="pseudo" v-model="newPseudo" placeholder="MichaelTocard75" >
@@ -157,9 +157,9 @@ export default {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
-    height: 200px;
+    height: 250px;
     width: 100%;
-    border: 5px solid aquamarine;
+    border: 5px solid #15c8cb;
     border-radius: 5px;
     margin: 0;
     background-color: antiquewhite;
@@ -167,9 +167,10 @@ export default {
 
 #userImage{
     flex-direction: row;
-    height: 100%;
+    height: 80%;
     width: 30%;
     float: left;
+    margin-top: 5%;
 }
 
 .userSettingInfo{
@@ -178,6 +179,7 @@ export default {
     height: 100%;
     width: 70%;
     margin: 0;
+    margin-top: 10px;
 }
 .userSettingInfo h1{
     display: inline-block;

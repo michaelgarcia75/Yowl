@@ -6,8 +6,8 @@
         <td>{{postCommunity}} </td>
         <td>{{commentsOfOnePost.length}}</td>
         <td>
-            <button class='button' @click="$emit('deletePost', postId)">Delete</button>
-            <button class='button' @click="$emit('passPost', postId)">Pass</button>
+            <button class='buttonDelete' @click="$emit('deletePost', postId)">Delete</button>
+            <button class='buttonEdit' @click="$emit('passPost', postId)">Pass</button>
         </td>
     </tr>
     <!-- <AdminPostModal
@@ -87,3 +87,21 @@ export default {
   }
 }
 </script>
+
+<style>
+#firstTable{
+  margin-left: auto;
+  margin-right: auto;
+}
+.buttonEdit{
+  background-color: white;
+  border-radius: 3px;
+  border-color: blue;
+  margin-left: 3px;
+}
+.buttonDelete{
+  background-color: white;
+  border-radius: 3px;
+  border-color: red;
+}
+</style>

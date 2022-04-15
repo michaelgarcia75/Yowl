@@ -1,9 +1,6 @@
 <template>
   <div v-if="user" @click="isOpen = true" class="divModal">
     <input class="divModalBar" :readonly="readonly" placeholder="New post ..."/>
-    <img class="image" width="30" min-width="10"
-    src="../../assets/img.png"
-    />
   </div>
   <div class="Posts">
     <CommunitiesManager
@@ -45,7 +42,7 @@
           @change="onFilePicked"
         />
         <br />
-        <CommunityFilter :community="community" @getPostBycommunityFilter="getPostBycommunityFilter"/>
+        <CommunityFilter id="filterComu" :community="community" @getPostBycommunityFilter="getPostBycommunityFilter"/>
         <br />
         <button class="create" @click="createPost(postTitle, postContent, communityId)" type="submit">
           Create
@@ -137,18 +134,36 @@ export default {
 </script>
 
 <style  scoped>
-divModalBar {
-  background-color: hsl(0, 5%, 96%);
-  height: 40px;
-  width: 60%;
+#filterComu{
+  margin-left: 41.5%;
+  margin-bottom: 5px;
+}
+button{
+  border: solid 2px #01a0f9;
+  border-radius: 3%;
+  background-color: white;
+}
+input{
+  border: solid 2px #01a0f9;
+  border-radius: 3%;
+}
+textarea{
+  border: solid 2px #15c8cb;
+  border-radius: 3%;
+  height: 130px;
+  width: 250px;
+}
+.divModalBar {
+  border: solid 2px #01a0f9;
+  border-radius: 3%;
+  width: 20%;
+  height: 20px
 }
 .divModalBar:focus {
   outline: none;
 }
 .divModal {
-  cursor: pointer;
-  background-color: #dcdcdc;
-  width: 60%;
+  width: 100%;
   height: 60px;
 }
 .modal {
@@ -157,7 +172,7 @@ divModalBar {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -180,7 +195,6 @@ divModalBar {
   margin: 30px 10px 20px;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
   transition: all 0.5s;
-  cursor: pointer;
   font-family: "Caveat", cursive;
 }
 
@@ -196,6 +210,7 @@ divModalBar {
   line-height: 24px;
   text-align: center;
   transition: all 0.3s;
+  cursor: pointer;
 }
 
 .tc-note-body {
