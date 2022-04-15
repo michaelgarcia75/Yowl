@@ -19,8 +19,12 @@ export default {
   computed: {
   },
   methods: {
+    deBug () {
+      console.log('this user in post manager is ', this.user)
+    }
   },
   created () {
+    this.deBug()
   }
 }
 </script>
