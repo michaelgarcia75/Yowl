@@ -6,7 +6,7 @@
           <p>COMMENTS</p>
           <p>UPVOTES</p>
         </div>
-         <PostManager v-if="postsFiltered.lenght !== 0" :postsFiltered="postsFiltered" @deletePost="deletePost" :user="user" :users="users" :communities="communities" :comments="comments"
+         <PostManager v-if="postsFiltered.length !== 0" :postsFiltered="postsFiltered" @deletePost="deletePost" :user="user" :users="users" :communities="communities" :comments="comments"
          @ReportPost="ReportPost"/>
                  <!--<UpVotedPostsManager/> -->
 
@@ -42,25 +42,25 @@ export default {
     ...mapGetters(['isLoggedIn', 'getUser'])
   },
   methods: {
-    deletePost (postId) {
-      axios.delete('https://yowlteam.herokuapp.com/api/posts/' + postId)
-        .then((response) => {
-          axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
-            .then((response) => {
-            // console.log('posts is', response.data)
-              this.postsFiltered = response.data
-            // console.log('post filtered is', this.postsFiltered)
-            })
-            .catch(error => console.log(error))
-        })
-    },
-    ReportPost (postId) {
-      console.log('in report post post id is ', postId)
-      axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
-        {
-          is_reported: 1
-        })
-    }
+    // deletePost (postId) {
+    //   axios.delete('https://yowlteam.herokuapp.com/api/posts/' + postId)
+    //     .then((response) => {
+    //       axios.get('https://yowlteam.herokuapp.com/api/posts/user/' + this.userId)
+    //         .then((response) => {
+    //         // console.log('posts is', response.data)
+    //           this.postsFiltered = response.data
+    //         // console.log('post filtered is', this.postsFiltered)
+    //         })
+    //         .catch(error => console.log(error))
+    //     })
+    // },
+    // ReportPost (postId) {
+    //   console.log('in report post post id is ', postId)
+    //   axios.put('https://yowlteam.herokuapp.com/api/posts/' + postId,
+    //     {
+    //       is_reported: 1
+    //     })
+    // }
   },
   created () {
     this.user = this.getUser

@@ -1,6 +1,6 @@
 <template>
   <div class="eachPost">
-    <p v-if="community.lenght !== 0">{{community.name}} Posted by {{userNAME}} {{moment(date).fromNow()}}</p>
+    <p v-if="communities.length !== 0">{{community.name}} Posted by {{postUser.pseudo}} {{moment(date).fromNow()}}</p>
     <br />
     <h1>{{ postNewTitle }}</h1>
     <br />
@@ -9,8 +9,8 @@
     <br />
     <VoteButtons :post="post" />
     <button class="hover" @click="() => TogglePopUp('buttonTrigger')" v-if="userID === this.post.user_id">Edit Post</button>
-    <button class="hover" @click="this.$parent.$emit('deletePost', postId)" v-if="userID === this.post.user_id">Delete Post</button>
-    <button class="hover" id="reportButton" @click="this.$parent.$emit('ReportPost', postId)" v-if="PostIsReported === 0">Report this post</button>
+    <button class="hover" @click="this.$emit('deletePost', postId)" v-if="userID === this.post.user_id">Delete Post</button>
+    <button class="hover" id="reportButton" @click="this.$emit('ReportPost', postId)" v-if="PostIsReported === 0">Report this post</button>
     <CommentsManager v-if="commentsFiltered.length !== 0" :commentsFiltered="commentsFiltered" :postId="postId" :users="users"/>
     <EditPost
       v-if="popupTrigger.buttonTrigger"
