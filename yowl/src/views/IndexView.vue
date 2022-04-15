@@ -13,7 +13,7 @@ import axios from 'axios'
 import CreatePostButton from '@/components/SharedComponents/CreatePostButton.vue'
 import PostManager from '@/components/SharedComponents/PostManager.vue'
 import TopCommunities from '@/components/SharedComponents/TopCommunities.vue'
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'IndexView',
@@ -29,8 +29,7 @@ export default {
       categories: [],
       communities: [],
       comments: [],
-      users: [],
-      user: []
+      users: []
     }
   },
   methods: {
@@ -55,6 +54,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     ...mapGetters(['isLoggedIn', 'getToken', 'getUser'])
   },
   created () {
