@@ -5,8 +5,8 @@
     <td>{{commentContent}}</td>
     <td>{{commentPostId}} </td>
     <td>
-        <button class='button' @click="$emit('deleteComment', commentId)">Delete</button>
-        <button class='button' @click="$emit('passComment', commentId)">Pass</button>
+        <button class='buttonDelete' @click="$emit('deleteComment', commentId)">Delete</button>
+        <button class='buttonEdit' @click="$emit('passComment', commentId)">Pass</button>
     </td>
   </tr>
     <!-- <AdminPostModal></AdminPostModal> -->
@@ -60,3 +60,21 @@ export default {
   }
 }
 </script>
+
+<style>
+#firstTable{
+  margin-left: auto;
+  margin-right: auto;
+}
+.buttonEdit{
+  background-color: white;
+  border-radius: 3px;
+  border-color: blue;
+  margin-left: 3px;
+}
+.buttonDelete{
+  background-color: white;
+  border-radius: 3px;
+  border-color: red;
+}
+</style>

@@ -6,14 +6,14 @@
     <p id="titleYowl">YOWL</p>
     <SearchBar @getPostBySearch="getPostBySearch"/>
     <CategoriesFilter :filterAll="filterAll" :categories="categories" @getPostByCategoryFilter="getPostByCategoryFilter"/>
-    <div class="links">
+
     <router-link class="adminLink" v-if="isLoggedIn && user.is_admin === 1" to="/admin">Admin</router-link>
     <router-link class="loginLink" v-if="!isLoggedIn" to="/login">Login</router-link>
     <router-link class="registerLink" v-if="!isLoggedIn" to="/register">Register</router-link>
-    </div>
+
     <DropDownMenu menu-title="Menu">
       <section class="option">
-        <span v-if="isLoggedIn" class="desc">Logged as {{user.pseudo}} </span>
+        <span v-if="isLoggedIn" class="desc">Logged as <b>{{user.pseudo}}</b> </span>
       </section>
       <section v-if="isLoggedIn" class="option">
         <router-link to="/dashboard">Profil</router-link>
@@ -24,7 +24,7 @@
         <a @click="logout()" >Log Out</a>
       </section>
       <section class="option">
-        <span class="desc">Dark mode // OPTION</span>
+        <span class="desc"></span>
       </section>
     </DropDownMenu>
 
@@ -206,8 +206,8 @@ nav a {
   text-decoration: underline;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.option{
+  margin-left: -50%;
 }
 .links{
   margin-top: -2%;
@@ -217,6 +217,9 @@ nav a.router-link-exact-active {
 .loginLink{
   margin-left: 5px;
   margin-right: 5px;
+}
+.registerLink{
+  margin-right: -85%;
 }
 .adminLink:hover {
   color: #29f29b;

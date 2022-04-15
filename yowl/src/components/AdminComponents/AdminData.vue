@@ -1,15 +1,20 @@
 <template>
-    users in total : {{this.users.length}}
+    <u>users in total</u> : <b>{{this.users.length}}</b>
     <br>
-    posts in total : {{this.posts.length}}
     <br>
-    communities in total : {{this.communities.length}}
+    <u>posts in total</u> : <b>{{this.posts.length}}</b>
     <br>
-    new users today : {{ this.NewUsersToday.length }}
     <br>
-    average new users daily : {{ this.AVGUsers }}
+    <u>communities in total</u> : <b>{{this.communities.length}}</b>
     <br>
-    average new posts daily : {{ this.AVGPosts }}
+    <br>
+    <u>new users today</u> : <b>{{ this.NewUsersToday.length }}</b>
+    <br>
+    <br>
+    <u>average new users daily</u> : <b>{{ this.AVGUsers }}</b>
+    <br>
+    <br>
+    <u>average new posts daily</u> : <b>{{ this.AVGPosts }}</b>
 </template>
 
 <script>

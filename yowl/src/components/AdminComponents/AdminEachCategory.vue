@@ -4,8 +4,8 @@
         <td>{{categoryName}}</td>
         <td>{{communityAmount}} </td>
         <td>
-            <button class='button' @click="ChangeCategoryEditForm()">Edit</button>
-            <button v-if="communityAmount === 0" class='button' @click="$emit('deleteCategory', categoryId)">Delete</button>
+            <button class='buttonEdit' @click="ChangeCategoryEditForm()">Edit</button>
+            <button v-if="communityAmount === 0" class='buttonDelete' @click="$emit('deleteCategory', categoryId)">Delete</button>
         </td>
     </tr>
     <tr v-else>
@@ -64,3 +64,21 @@ export default {
   }
 }
 </script>
+
+<style>
+#firstTable{
+  margin-left: auto;
+  margin-right: auto;
+}
+.buttonEdit{
+  background-color: white;
+  border-radius: 3px;
+  border-color: blue;
+  margin-left: 3px;
+}
+.buttonDelete{
+  background-color: white;
+  border-radius: 3px;
+  border-color: red;
+}
+</style>

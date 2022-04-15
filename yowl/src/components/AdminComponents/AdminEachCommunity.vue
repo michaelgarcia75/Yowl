@@ -6,8 +6,8 @@
     <td>{{postsOfOneCommunity.length}} </td>
     <td>{{usersOfOneCommunity.length}} </td>
     <td>
-        <button class='button' @click="$emit('deleteCommunity', communityId)">Delete</button>
-        <button class='button' @click="$emit('passCommunity', communityId)">Pass</button>
+        <button class='buttonDelete' @click="$emit('deleteCommunity', communityId)">Delete</button>
+        <button class='buttonEdit' @click="$emit('passCommunity', communityId)">Pass</button>
     </td>
   </tr>
 </template>
@@ -64,3 +64,21 @@ export default {
   }
 }
 </script>
+
+<style>
+#firstTable{
+  margin-left: auto;
+  margin-right: auto;
+}
+.buttonEdit{
+  background-color: white;
+  border-radius: 3px;
+  border-color: blue;
+  margin-left: 3px;
+}
+.buttonDelete{
+  background-color: white;
+  border-radius: 3px;
+  border-color: red;
+}
+</style>
