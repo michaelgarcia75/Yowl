@@ -29,6 +29,7 @@ import axios from 'axios'
 import VoteButtons from '@/components/SharedComponents/VoteButtons.vue'
 import CommentsManager from '@/components/SharedComponents/CommentsManager.vue'
 import { ref } from 'vue'
+import { mapGetters } from 'vuex'
 import EditPost from '@/components/SharedComponents/EditPost.vue'
 
 export default {
@@ -60,13 +61,15 @@ export default {
       postId: this.post.id,
       postNewTitle: this.post.title,
       postNewContent: this.post.content,
-      userID: this.user.id,
-      userNAME: this.user.pseudo,
+      userID: 0,
+      userNAME: '',
       PostIsReported: this.post.is_reported,
-      postUser: {}
+      postUser: {},
+      loggedUser: {}
     }
   },
   methods: {
+    ...mapGetters(['isLoggedIn', 'getToken', 'getUser']),
     debug () {
       console.log('this post ID is ', this.postId, 'post is report is ', this.PostIsReported)
     },
@@ -91,6 +94,11 @@ export default {
     const communityArray = this.communities.filter(community => community.id === this.post.community_id)
     this.community = communityArray.find(obj => { return obj.id === this.post.community_id })
     // console.log('C: ', this.community)
+    if (this.isLoggedIn) {
+      this.loggedUser = this.getUser
+      this.userID = this.loggedUser.id
+      this.userNAME = this.loggedUser.pseudo
+    }
   }
 }
 </script>
