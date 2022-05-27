@@ -59,7 +59,7 @@ export default {
         .catch(error => console.log(error))
     },
     getUserName (userId) {
-      // console.log('this user id is ', userId)
+      // console.log('this user id is:', userId)
       axios.get('https://yowlteam.herokuapp.com/api/users')
         .then((response) => {
           this.users = response.data
