@@ -7,7 +7,7 @@
     />
   </div>
   <!-- <button @click="isOpen = true" class="tc-note-open">
-    Create a Community
+    Create a Community !
   </button> -->
   <div class="modal" v-if="isOpen">
     <div class="tc-note">
